@@ -85,17 +85,17 @@ theme_override_constants/separation = 50
 [node name="Pause" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "Pause"
+text = "(P)ause"
 
 [node name="Reset" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "Reset"
+text = "(R)eset"
 
 [node name="Exit" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "Exit"
+text = "(E)xit"
 
 [node name="Grid" parent="CanvasLayer/Control" instance=ExtResource("2_ts7bs")]
 layout_mode = 1
@@ -111,4 +111,6 @@ offset_bottom = 640.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
