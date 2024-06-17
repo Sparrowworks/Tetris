@@ -66,3 +66,4 @@ theme_override_font_sizes/font_size = 96
 text = "EXIT"
 
 [connection signal="pressed" from="CanvasLayer/Control/Buttons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Exit" to="." method="_on_exit_pressed"]

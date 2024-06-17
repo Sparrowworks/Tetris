@@ -16,6 +16,87 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="UI" type="VBoxContainer" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(960, 1920)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1160.0
+offset_top = -960.0
+offset_right = -200.0
+offset_bottom = 960.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/UI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 144
+text = "TETRIS"
+horizontal_alignment = 1
+
+[node name="NextContainer" type="VBoxContainer" parent="CanvasLayer/Control/UI"]
+layout_mode = 2
+
+[node name="Next" type="Label" parent="CanvasLayer/Control/UI/NextContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Next:"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/UI/NextContainer"]
+custom_minimum_size = Vector2(120, 240)
+layout_mode = 2
+
+[node name="StatsContainer" type="VBoxContainer" parent="CanvasLayer/Control/UI"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Time" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Time: 0"
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="Lines" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Lines: 0"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Control/UI"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 150
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/Control/UI"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Pause" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Pause"
+
+[node name="Reset" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Reset"
+
+[node name="Exit" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Exit"
+
 [node name="Grid" parent="CanvasLayer/Control" instance=ExtResource("2_ts7bs")]
 layout_mode = 1
 anchors_preset = 8
@@ -29,3 +110,5 @@ offset_right = 320.0
 offset_bottom = 640.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
