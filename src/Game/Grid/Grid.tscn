@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://nc4bb6j7bfmr"]
+
+[ext_resource type="PackedScene" uid="uid://cfwvsxkc4obe" path="res://src/Game/Grid/Row/Row.tscn" id="1_wbwok"]
+
+[node name="Grid" type="VBoxContainer"]
+theme_override_constants/separation = 0
+
+[node name="Row" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row2" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row3" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row4" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row5" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row6" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row7" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row8" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row9" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row10" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row11" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row12" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row13" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row14" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row15" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row16" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row17" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row18" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row19" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2
+
+[node name="Row20" parent="." instance=ExtResource("1_wbwok")]
+layout_mode = 2

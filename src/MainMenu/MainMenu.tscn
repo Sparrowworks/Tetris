@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://c4b282ks3fxoo"]
+[gd_scene load_steps=2 format=3 uid="uid://c4b282ks3fxoo"]
+
+[ext_resource type="Script" path="res://src/MainMenu/MainMenu.gd" id="1_26kxw"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_26kxw")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -61,3 +64,5 @@ custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
 theme_override_font_sizes/font_size = 96
 text = "EXIT"
+
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Play" to="." method="_on_play_pressed"]
