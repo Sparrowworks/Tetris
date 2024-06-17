@@ -11,8 +11,28 @@ config_version=5
 [application]
 
 config/name="Tetris"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+run/main_scene="res://src/Main/Main.tscn"
+config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[autoload]
+
+Composer="*res://src/Composer/Composer.cs"
+ComposerGD="*res://src/Composer/ComposerGD.cs"
+
+[display]
+
+window/size/viewport_width=3840
+window/size/viewport_height=2160
+window/size/resizable=false
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+
+[dotnet]
+
+project/assembly_name="Tetris"
 
 [rendering]
 
