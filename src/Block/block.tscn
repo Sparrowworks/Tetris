@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bep45bqh2spgn"]
+
+[ext_resource type="Script" path="res://src/Block/block.gd" id="1_r5jnt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rrv3x"]
+
+[node name="Block" type="AnimatedSprite2D"]
+position = Vector2(1912, 1060)
+sprite_frames = SubResource("SpriteFrames_rrv3x")
+script = ExtResource("1_r5jnt")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
