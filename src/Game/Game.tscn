@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://04o6dj0y088j"]
+[gd_scene load_steps=4 format=3 uid="uid://04o6dj0y088j"]
 
 [ext_resource type="Script" path="res://src/Game/Game.gd" id="1_5odnr"]
 [ext_resource type="PackedScene" uid="uid://nc4bb6j7bfmr" path="res://src/Game/Grid/Grid.tscn" id="2_ts7bs"]
+[ext_resource type="PackedScene" uid="uid://2kcahoaciwg7" path="res://src/Game/Tetrimino/Tetrimino.tscn" id="3_p03mt"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5odnr")
@@ -104,12 +105,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -640.0
-offset_right = 320.0
-offset_bottom = 640.0
+offset_left = -450.0
+offset_top = -1350.0
+offset_right = 450.0
+offset_bottom = 810.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Tetrimino" parent="CanvasLayer/Control" groups=["active"] instance=ExtResource("3_p03mt")]
+position = Vector2(1920, -180)
+BLOCK_TYPE = 0
 
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
