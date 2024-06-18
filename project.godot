@@ -78,6 +78,12 @@ reset={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="blocks"
+2d_physics/layer_2="borders"
+2d_physics/layer_3="grid"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
