@@ -114,7 +114,6 @@ grow_vertical = 2
 
 [node name="Tetrimino" parent="CanvasLayer/Control" groups=["active"] instance=ExtResource("3_p03mt")]
 position = Vector2(1920, -180)
-BLOCK_TYPE = 0
 
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]

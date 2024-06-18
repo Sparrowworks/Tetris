@@ -8,11 +8,11 @@ script = ExtResource("1_jc3pc")
 BLOCK_TYPE = 2
 
 [node name="Block1" parent="." instance=ExtResource("2_w1mkb")]
-position = Vector2(45, -45)
+position = Vector2(-45, -45)
 animation = &"Orange"
 
 [node name="Block2" parent="." instance=ExtResource("2_w1mkb")]
-position = Vector2(45, 135)
+position = Vector2(135, 45)
 animation = &"Orange"
 
 [node name="Block3" parent="." instance=ExtResource("2_w1mkb")]
@@ -20,7 +20,7 @@ position = Vector2(45, 45)
 animation = &"Orange"
 
 [node name="Block4" parent="." instance=ExtResource("2_w1mkb")]
-position = Vector2(45, 225)
+position = Vector2(-45, 45)
 animation = &"Orange"
 
 [node name="Area2D" type="Area2D" parent="."]
