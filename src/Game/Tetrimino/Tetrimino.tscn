@@ -1,28 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://2kcahoaciwg7"]
+[gd_scene load_steps=4 format=3 uid="uid://2kcahoaciwg7"]
 
 [ext_resource type="Script" path="res://src/Game/Tetrimino/Tetrimino.gd" id="1_jc3pc"]
 [ext_resource type="PackedScene" uid="uid://c5rn1df8iu2l5" path="res://src/Game/Blocks/Block.tscn" id="2_w1mkb"]
+[ext_resource type="Shape2D" uid="uid://bgdb7j7kj6h3y" path="res://Assets/Shapes/shape_j.tres" id="3_mh0lb"]
 
 [node name="Tetrimino" type="Node2D"]
 script = ExtResource("1_jc3pc")
-BLOCK_TYPE = 2
+BLOCK_TYPE = 1
 
 [node name="Block1" parent="." instance=ExtResource("2_w1mkb")]
-position = Vector2(-45, -45)
-animation = &"Orange"
+position = Vector2(135, -45)
+animation = &"Pink"
 
 [node name="Block2" parent="." instance=ExtResource("2_w1mkb")]
 position = Vector2(135, 45)
-animation = &"Orange"
+animation = &"Pink"
 
 [node name="Block3" parent="." instance=ExtResource("2_w1mkb")]
 position = Vector2(45, 45)
-animation = &"Orange"
+animation = &"Pink"
 
 [node name="Block4" parent="." instance=ExtResource("2_w1mkb")]
 position = Vector2(-45, 45)
-animation = &"Orange"
+animation = &"Pink"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="TestCollision" type="Area2D" parent="."]
+position = Vector2(0, 90)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestCollision"]
+unique_name_in_owner = true
+shape = ExtResource("3_mh0lb")
