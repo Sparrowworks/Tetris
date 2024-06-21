@@ -10,7 +10,8 @@ class_name Tetrimino extends Node2D
 @onready var block_2: Block = $Block2
 @onready var block_3: Block = $Block3
 @onready var block_4: Block = $Block4
-@onready var shape_cast_2d: ShapeCast2D = $ShapeCast2D
+@onready var test_collision: Area2D = $TestCollision
+@onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -22,34 +23,36 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
 		move_down()
 
+
 	if Input.is_action_just_pressed("left"):
 		move_left()
 	elif Input.is_action_just_pressed("right"):
 		move_right()
 
 func move_down() -> void:
-	shape_cast_2d.position = Vector2(0,180)
-	shape_cast_2d.force_shapecast_update()
+	test_collision.position = Vector2(0,180)
+	await get_tree().physics_frame
 
-	if shape_cast_2d.is_colliding():
+	print(test_collision.get_overlapping_areas().size())
+	if test_collision.get_overlapping_areas().size() > 0:
 		return
 
 	global_position = Vector2(global_position.x,global_position.y+Global.BLOCK_SIZE)
 
 func move_left() -> void:
-	shape_cast_2d.position = Vector2(-90,90)
-	shape_cast_2d.force_shapecast_update()
+	test_collision.position = Vector2(-90,90)
+	await get_tree().physics_frame
 
-	if shape_cast_2d.is_colliding():
+	if test_collision.get_overlapping_areas().size() > 0:
 		return
 
 	global_position = Vector2(global_position.x-Global.BLOCK_SIZE,global_position.y)
 
 func move_right() -> void:
-	shape_cast_2d.position = Vector2(90,90)
-	shape_cast_2d.force_shapecast_update()
+	test_collision.position = Vector2(90,90)
+	await get_tree().physics_frame
 
-	if shape_cast_2d.is_colliding():
+	if test_collision.get_overlapping_areas().size() > 0:
 		return
 
 	global_position = Vector2(global_position.x+Global.BLOCK_SIZE,global_position.y)
@@ -65,7 +68,7 @@ func draw_new_block() -> void:
 			block_3.animation = "Blue"
 			block_4.animation = "Blue"
 
-			shape_cast_2d.shape = Global.SHAPE_I
+			collision_shape_2d.shape = Global.SHAPE_I
 
 			block_1.position = Vector2(45,-45)
 			block_2.position = Vector2(45,135)
@@ -77,7 +80,7 @@ func draw_new_block() -> void:
 			block_3.animation = "Pink"
 			block_4.animation = "Pink"
 
-			shape_cast_2d.shape = Global.SHAPE_J
+			collision_shape_2d.shape = Global.SHAPE_J
 
 			block_1.position = Vector2(135,-45)
 			block_2.position = Vector2(135,45)
@@ -89,7 +92,7 @@ func draw_new_block() -> void:
 			block_3.animation = "Orange"
 			block_4.animation = "Orange"
 
-			shape_cast_2d.shape = Global.SHAPE_L
+			collision_shape_2d.shape = Global.SHAPE_L
 
 			block_1.position = Vector2(-45,-45)
 			block_2.position = Vector2(135,45)
@@ -101,7 +104,7 @@ func draw_new_block() -> void:
 			block_3.animation = "Yellow"
 			block_4.animation = "Yellow"
 
-			shape_cast_2d.shape = Global.SHAPE_O
+			collision_shape_2d.shape = Global.SHAPE_O
 
 			block_1.position = Vector2(-45,-45)
 			block_2.position = Vector2(45,-45)
@@ -113,7 +116,7 @@ func draw_new_block() -> void:
 			block_3.animation = "Green"
 			block_4.animation = "Green"
 
-			shape_cast_2d.shape = Global.SHAPE_S
+			collision_shape_2d.shape = Global.SHAPE_S
 
 			block_1.position = Vector2(135,-45)
 			block_2.position = Vector2(45,-45)
@@ -125,7 +128,7 @@ func draw_new_block() -> void:
 			block_3.animation = "Purple"
 			block_4.animation = "Purple"
 
-			shape_cast_2d.shape = Global.SHAPE_T
+			collision_shape_2d.shape = Global.SHAPE_T
 
 			block_1.position = Vector2(135,45)
 			block_2.position = Vector2(45,-45)
@@ -137,9 +140,10 @@ func draw_new_block() -> void:
 			block_3.animation = "Red"
 			block_4.animation = "Red"
 
-			shape_cast_2d.shape = Global.SHAPE_Z
+			collision_shape_2d.shape = Global.SHAPE_Z
 
 			block_1.position = Vector2(135,45)
 			block_2.position = Vector2(45,-45)
 			block_3.position = Vector2(45,45)
 			block_4.position = Vector2(-45,-45)
+

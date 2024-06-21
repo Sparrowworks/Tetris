@@ -1,14 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://04o6dj0y088j"]
+[gd_scene load_steps=4 format=3 uid="uid://04o6dj0y088j"]
 
 [ext_resource type="Script" path="res://src/Game/Game.gd" id="1_5odnr"]
 [ext_resource type="PackedScene" uid="uid://nc4bb6j7bfmr" path="res://src/Game/Grid/Grid.tscn" id="2_ts7bs"]
 [ext_resource type="PackedScene" uid="uid://2kcahoaciwg7" path="res://src/Game/Tetrimino/Tetrimino.tscn" id="3_p03mt"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_usuib"]
-size = Vector2(90, 2160)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rn6f2"]
-size = Vector2(900, 90)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5odnr")
@@ -120,30 +114,11 @@ grow_vertical = 2
 
 [node name="Tetrimino" parent="CanvasLayer/Control" groups=["active"] instance=ExtResource("3_p03mt")]
 position = Vector2(1920, -180)
-BLOCK_TYPE = 6
 
-[node name="Borders" type="Node2D" parent="."]
+[node name="GridBorders" type="Area2D" parent="."]
 
-[node name="BorderLeft" type="Area2D" parent="Borders"]
-position = Vector2(1425, 810)
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderLeft"]
-shape = SubResource("RectangleShape2D_usuib")
-
-[node name="BorderRight" type="Area2D" parent="Borders"]
-position = Vector2(2415, 810)
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderRight"]
-shape = SubResource("RectangleShape2D_usuib")
-
-[node name="BorderBottom" type="Area2D" parent="Borders"]
-position = Vector2(1920, 1935)
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderBottom"]
-shape = SubResource("RectangleShape2D_rn6f2")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GridBorders"]
+polygon = PackedVector2Array(1465, -270, 1380, -270, 1380, 1980, 2460, 1980, 2460, -270, 2375, -270, 2375, 1895, 1465, 1895)
 
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
