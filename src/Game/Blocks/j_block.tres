@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://bidtdnb3ocskd"]
+
+[ext_resource type="Texture2D" uid="uid://ydyjtg7fwfhb" path="res://Assets/pink.png" id="1_8qnc6"]
+[ext_resource type="Script" path="res://src/Game/Blocks/Block.gd" id="1_iwa0s"]
+
+[resource]
+script = ExtResource("1_iwa0s")
+BlockTexture = ExtResource("1_8qnc6")
+SpawnCoords = Array[Vector2i]([Vector2i(4, 0), Vector2i(4, 1), Vector2i(5, 1), Vector2i(6, 1)])
+id = 1
