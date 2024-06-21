@@ -114,11 +114,7 @@ grow_vertical = 2
 
 [node name="Tetrimino" parent="CanvasLayer/Control" groups=["active"] instance=ExtResource("3_p03mt")]
 position = Vector2(1920, -180)
-
-[node name="GridBorders" type="Area2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GridBorders"]
-polygon = PackedVector2Array(1465, -270, 1380, -270, 1380, 1980, 2460, 1980, 2460, -270, 2375, -270, 2375, 1895, 1465, 1895)
+BLOCK_TYPE = 1
 
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]

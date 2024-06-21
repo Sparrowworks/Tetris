@@ -10,7 +10,6 @@ class_name Tetrimino extends Node2D
 @onready var block_2: Block = $Block2
 @onready var block_3: Block = $Block3
 @onready var block_4: Block = $Block4
-@onready var test_collision: Area2D = $TestCollision
 @onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
 
 func _process(delta: float) -> void:
@@ -21,41 +20,12 @@ func _process(delta: float) -> void:
 		set_process(false)
 
 	if Input.is_action_just_pressed("down"):
-		move_down()
-
+		global_position = Vector2(global_position.x,global_position.y+Global.BLOCK_SIZE)
 
 	if Input.is_action_just_pressed("left"):
-		move_left()
+		global_position = Vector2(global_position.x-Global.BLOCK_SIZE,global_position.y)
 	elif Input.is_action_just_pressed("right"):
-		move_right()
-
-func move_down() -> void:
-	test_collision.position = Vector2(0,180)
-	await get_tree().physics_frame
-
-	print(test_collision.get_overlapping_areas().size())
-	if test_collision.get_overlapping_areas().size() > 0:
-		return
-
-	global_position = Vector2(global_position.x,global_position.y+Global.BLOCK_SIZE)
-
-func move_left() -> void:
-	test_collision.position = Vector2(-90,90)
-	await get_tree().physics_frame
-
-	if test_collision.get_overlapping_areas().size() > 0:
-		return
-
-	global_position = Vector2(global_position.x-Global.BLOCK_SIZE,global_position.y)
-
-func move_right() -> void:
-	test_collision.position = Vector2(90,90)
-	await get_tree().physics_frame
-
-	if test_collision.get_overlapping_areas().size() > 0:
-		return
-
-	global_position = Vector2(global_position.x+Global.BLOCK_SIZE,global_position.y)
+		global_position = Vector2(global_position.x+Global.BLOCK_SIZE,global_position.y)
 
 func draw_new_block() -> void:
 	if block_1 == null or block_2 == null or block_3 == null or block_4 == null:
