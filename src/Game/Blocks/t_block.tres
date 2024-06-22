@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_ppkaa")
 BlockTexture = ExtResource("1_o2arb")
-SpawnCoords = Array[Vector2i]([Vector2i(4, 1), Vector2i(5, 1), Vector2i(6, 1), Vector2i(5, 0)])
+SpawnCoords = Array[Vector2i]([Vector2i(5, 0), Vector2i(4, 1), Vector2i(5, 1), Vector2i(6, 1)])
 id = 5
