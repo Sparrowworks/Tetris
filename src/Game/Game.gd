@@ -9,7 +9,7 @@ func reset() -> void:
 func exit() -> void:
 	ComposerGD.ReplaceScene("Game","MainMenu",Global.main)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("exit"):
 		exit()
 
