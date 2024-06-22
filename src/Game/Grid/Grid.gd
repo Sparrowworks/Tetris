@@ -59,17 +59,32 @@ func generate_new_block() -> void:
 #endregion
 
 #region MOVEMENT
-func move_down() -> void:
-	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.DOWN)
+enum LEGAL_MOVES
+{
+	DOWN,
+	LEFT,
+	RIGHT
+}
 
-	if can_move_down(updated_coords):
-		update_coords(updated_coords)
-
-#func move_left() -> void:
-	#update_coords(Vector2i.LEFT)
-#
-#func move_right() -> void:
-	#update_coords(Vector2i.RIGHT)
+func move(request: LEGAL_MOVES) -> void:
+	var updated_coords: Array[Vector2i]
+	match request:
+		LEGAL_MOVES.DOWN:
+			updated_coords = get_new_coords(Vector2i.DOWN)
+			for coord: Vector2i in updated_coords:
+				if coord.y > MAX_Y-1: return
+		LEGAL_MOVES.LEFT:
+			updated_coords = get_new_coords(Vector2i.LEFT)
+			for coord: Vector2i in updated_coords:
+				if coord.y > MAX_X-1: return
+		LEGAL_MOVES.RIGHT:
+			updated_coords = get_new_coords(Vector2i.RIGHT)	
+			for coord: Vector2i in updated_coords:
+				if coord.y > MAX_X+1: return
+		_:
+			printerr("Illegal move: ", request)
+			return
+	update_coords(updated_coords)
 
 func get_new_coords(vector: Vector2i) -> Array[Vector2i]:
 	var new_coords: Array[Vector2i] = []
@@ -92,22 +107,11 @@ func update_coords(coords: Array[Vector2i]) -> void:
 
 #endregion MOVEMENT
 
-#region VERIFY_MOVEMENT
-func can_move_down(coords: Array[Vector2i]) -> bool:
-	for coord: Vector2i in coords:
-		if coord.y > MAX_Y-1:
-			return false
-
-	return true
-
-#endregion
-
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
-		move_down()
-
-	#if Input.is_action_just_pressed("left"):
-		#move_left()
-	#elif Input.is_action_just_pressed("right"):
-		#move_right()
-
+		move(LEGAL_MOVES.DOWN)
+	
+	if Input.is_action_just_pressed("left"):
+		move(LEGAL_MOVES.LEFT)
+	elif Input.is_action_just_pressed("right"):
+		move(LEGAL_MOVES.RIGHT)
