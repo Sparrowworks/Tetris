@@ -31,8 +31,11 @@ var active_block_coords: Array[Vector2i] = [
 
 var active_block_id: int = 0
 
+var timer:Timer
+
 func _ready() -> void:
 	clear_board()
+	timer = $TetrominoTimer
 	generate_new_block()
 
 #region BOARD_FUNCTIONS
@@ -45,7 +48,8 @@ func clear_board(fast: bool = true) -> void:
 				set_cell(0,Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
 func generate_new_block() -> void:
-	var block_id: int = 3
+	timer.stop()
+	var block_id: int = randi_range(0,6)
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array[Vector2i] = block_resource.SpawnCoords
 	var block_color: int = block_resource.id
@@ -55,6 +59,7 @@ func generate_new_block() -> void:
 		active_block_coords.append(coord)
 
 	active_block_id = block_id
+	timer.start()
 
 #endregion
 
@@ -72,7 +77,9 @@ func move(request: LEGAL_MOVES) -> void:
 		LEGAL_MOVES.DOWN:
 			updated_coords = get_new_coords(Vector2i.DOWN)
 			for coord: Vector2i in updated_coords:
-				if coord.y > MAX_Y-1: return
+				if coord.y > MAX_Y-1:
+					generate_new_block()
+					return
 		LEGAL_MOVES.LEFT:
 			updated_coords = get_new_coords(Vector2i.LEFT)
 			for coord: Vector2i in updated_coords:
@@ -109,9 +116,12 @@ func update_coords(coords: Array[Vector2i]) -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
-		move(LEGAL_MOVES.DOWN)
-	
-	if Input.is_action_just_pressed("left"):
+		_on_tetromino_timer_timeout()
+	elif Input.is_action_just_pressed("left"):
 		move(LEGAL_MOVES.LEFT)
 	elif Input.is_action_just_pressed("right"):
 		move(LEGAL_MOVES.RIGHT)
+
+func _on_tetromino_timer_timeout() -> void:
+	move(LEGAL_MOVES.DOWN)
+	print("i moved")

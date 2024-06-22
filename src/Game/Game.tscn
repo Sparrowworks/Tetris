@@ -100,6 +100,10 @@ text = "(E)xit"
 [node name="Grid" parent="." instance=ExtResource("2_ts7bs")]
 position = Vector2(1380, -360)
 
+[node name="TetrominoTimer" type="Timer" parent="Grid"]
+wait_time = 3.0
+
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="timeout" from="Grid/TetrominoTimer" to="Grid" method="_on_tetromino_timer_timeout"]
