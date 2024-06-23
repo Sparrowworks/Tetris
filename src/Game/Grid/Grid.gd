@@ -62,6 +62,8 @@ func generate_new_block() -> void:
 
 	move_timer.start()
 
+	move_down()
+
 #endregion
 
 #region MOVEMENT
@@ -72,6 +74,8 @@ func move_down() -> void:
 		update_coords(updated_coords)
 	else:
 		generate_new_block()
+
+	move_timer.start()
 
 func move_left() -> void:
 	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.LEFT)
@@ -112,6 +116,13 @@ func can_move_down(coords: Array[Vector2i]) -> bool:
 		if coord.y > MAX_Y-1:
 			return false
 
+		if coord in active_block_coords: continue
+
+		var tile: int = get_cell_source_id(0,coord)
+
+		if tile != BLOCK_IDS.GREY:
+			return false
+
 	return true
 
 func can_move_left(coords: Array[Vector2i]) -> bool:
@@ -119,11 +130,25 @@ func can_move_left(coords: Array[Vector2i]) -> bool:
 		if coord.x < 0:
 			return false
 
+		if coord in active_block_coords: continue
+
+		var tile: int = get_cell_source_id(0,coord)
+
+		if tile != BLOCK_IDS.GREY:
+			return false
+
 	return true
 
 func can_move_right(coords: Array[Vector2i]) -> bool:
 	for coord: Vector2i in coords:
 		if coord.x >= MAX_X:
+			return false
+
+		if coord in active_block_coords: continue
+
+		var tile: int = get_cell_source_id(0,coord)
+
+		if tile != BLOCK_IDS.GREY:
 			return false
 
 	return true
