@@ -25,6 +25,8 @@ const BLOCK_FILES: Array[Block] = [
 	preload("res://src/Game/Blocks/z_block.tres")
 ]
 
+@onready var move_timer: Timer = $MoveTimer
+
 var active_block_coords: Array[Vector2i] = [
 
 ]
@@ -45,16 +47,20 @@ func clear_board(fast: bool = true) -> void:
 				set_cell(0,Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
 func generate_new_block() -> void:
-	var block_id: int = 3
+	var block_id: int = randi_range(0,6)
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array[Vector2i] = block_resource.SpawnCoords
 	var block_color: int = block_resource.id
+
+	active_block_coords.clear()
 
 	for coord: Vector2i in block_spawn_coords:
 		set_cell(0,coord,block_color,ATLAS_COORDS)
 		active_block_coords.append(coord)
 
 	active_block_id = block_id
+
+	move_timer.start()
 
 #endregion
 
@@ -64,12 +70,20 @@ func move_down() -> void:
 
 	if can_move_down(updated_coords):
 		update_coords(updated_coords)
+	else:
+		generate_new_block()
 
-#func move_left() -> void:
-	#update_coords(Vector2i.LEFT)
-#
-#func move_right() -> void:
-	#update_coords(Vector2i.RIGHT)
+func move_left() -> void:
+	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.LEFT)
+
+	if can_move_left(updated_coords):
+		update_coords(updated_coords)
+
+func move_right() -> void:
+	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.RIGHT)
+
+	if can_move_right(updated_coords):
+		update_coords(updated_coords)
 
 func get_new_coords(vector: Vector2i) -> Array[Vector2i]:
 	var new_coords: Array[Vector2i] = []
@@ -100,14 +114,30 @@ func can_move_down(coords: Array[Vector2i]) -> bool:
 
 	return true
 
+func can_move_left(coords: Array[Vector2i]) -> bool:
+	for coord: Vector2i in coords:
+		if coord.x < 0:
+			return false
+
+	return true
+
+func can_move_right(coords: Array[Vector2i]) -> bool:
+	for coord: Vector2i in coords:
+		if coord.x >= MAX_X:
+			return false
+
+	return true
+
 #endregion
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
 		move_down()
 
-	#if Input.is_action_just_pressed("left"):
-		#move_left()
-	#elif Input.is_action_just_pressed("right"):
-		#move_right()
+	if Input.is_action_just_pressed("left"):
+		move_left()
+	elif Input.is_action_just_pressed("right"):
+		move_right()
 
+func _on_move_timer_timeout() -> void:
+	move_down()
