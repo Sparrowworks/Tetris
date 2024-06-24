@@ -27,11 +27,12 @@ const BLOCK_FILES: Array[Block] = [
 
 @onready var move_timer: Timer = $MoveTimer
 
-var active_block_coords: Array[Vector2i] = [
+var active_block_coords: Array = [
 
 ]
 
 var active_block_id: int = 0
+var active_rotation_id: int = 0
 
 func _ready() -> void:
 	clear_board()
@@ -49,18 +50,16 @@ func clear_board(fast: bool = true) -> void:
 func generate_new_block() -> void:
 	var block_id: int = randi_range(0,6)
 	var block_resource: Block = BLOCK_FILES[block_id]
-	var block_spawn_coords: Array[Vector2i] = block_resource.SpawnCoords
-	var block_color: int = block_resource.id
+	var block_spawn_coords: Array = block_resource.SpawnCoords[0]
+	var block_color: int = block_resource.ID
 
 	active_block_coords.clear()
-
 	for coord: Vector2i in block_spawn_coords:
-		set_cell(0,coord,block_color,ATLAS_COORDS)
-		active_block_coords.append(coord)
+		var new_coord: Vector2i = Vector2i(coord.x+int(MAX_X/2)-1,coord.y)
+		set_cell(0,new_coord,block_color,ATLAS_COORDS)
+		active_block_coords.append(new_coord)
 
 	active_block_id = block_id
-
-	move_timer.start()
 
 	move_down()
 
@@ -68,7 +67,7 @@ func generate_new_block() -> void:
 
 #region MOVEMENT
 func move_down() -> void:
-	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.DOWN)
+	var updated_coords: Array = get_new_coords(Vector2i.DOWN)
 
 	if can_move_down(updated_coords):
 		update_coords(updated_coords)
@@ -78,19 +77,19 @@ func move_down() -> void:
 	move_timer.start()
 
 func move_left() -> void:
-	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.LEFT)
+	var updated_coords: Array= get_new_coords(Vector2i.LEFT)
 
 	if can_move_left(updated_coords):
 		update_coords(updated_coords)
 
 func move_right() -> void:
-	var updated_coords: Array[Vector2i] = get_new_coords(Vector2i.RIGHT)
+	var updated_coords: Array = get_new_coords(Vector2i.RIGHT)
 
 	if can_move_right(updated_coords):
 		update_coords(updated_coords)
 
-func get_new_coords(vector: Vector2i) -> Array[Vector2i]:
-	var new_coords: Array[Vector2i] = []
+func get_new_coords(vector: Vector2i) -> Array:
+	var new_coords: Array = []
 
 	for i in range(0,active_block_coords.size()):
 		var old_coord: Vector2i = active_block_coords[i]
@@ -98,20 +97,20 @@ func get_new_coords(vector: Vector2i) -> Array[Vector2i]:
 
 	return new_coords
 
-func update_coords(coords: Array[Vector2i]) -> void:
+func update_coords(coords: Array) -> void:
 	for i in range(0,active_block_coords.size()):
 		var old_coord: Vector2i = active_block_coords[i]
 		active_block_coords[i] = coords[i]
 
 		set_cell(0,old_coord,BLOCK_IDS.GREY,ATLAS_COORDS)
 
-	for coord in active_block_coords:
+	for coord: Vector2i in active_block_coords:
 		set_cell(0,coord,active_block_id,ATLAS_COORDS)
 
 #endregion MOVEMENT
 
 #region VERIFY_MOVEMENT
-func can_move_down(coords: Array[Vector2i]) -> bool:
+func can_move_down(coords: Array) -> bool:
 	for coord: Vector2i in coords:
 		if coord.y > MAX_Y-1:
 			return false
@@ -125,7 +124,7 @@ func can_move_down(coords: Array[Vector2i]) -> bool:
 
 	return true
 
-func can_move_left(coords: Array[Vector2i]) -> bool:
+func can_move_left(coords: Array) -> bool:
 	for coord: Vector2i in coords:
 		if coord.x < 0:
 			return false
@@ -139,7 +138,7 @@ func can_move_left(coords: Array[Vector2i]) -> bool:
 
 	return true
 
-func can_move_right(coords: Array[Vector2i]) -> bool:
+func can_move_right(coords: Array) -> bool:
 	for coord: Vector2i in coords:
 		if coord.x >= MAX_X:
 			return false
@@ -155,6 +154,29 @@ func can_move_right(coords: Array[Vector2i]) -> bool:
 
 #endregion
 
+func rotate_block(direction: int) -> void:
+	active_rotation_id += direction
+	var block_file: Block = BLOCK_FILES[active_block_id]
+
+	if active_rotation_id >= block_file.SpawnCoords.size():
+		active_rotation_id = 0
+
+	if active_rotation_id < 0:
+		active_rotation_id = block_file.SpawnCoords.size()-1
+
+	var rotation_array: Array = block_file.SpawnCoords[active_rotation_id]
+	var new_coords: Array = []
+
+	var pivot_coord: Vector2i = active_block_coords[block_file.PivotBlockIdx]
+
+	for i in range(0,active_block_coords.size()):
+		var rot_coord: Vector2i = rotation_array[i]
+		var new_coord: Vector2i = Vector2i(pivot_coord.x+rot_coord.x,pivot_coord.y+rot_coord.y)
+
+		new_coords.append(new_coord)
+
+	update_coords(new_coords)
+
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
 		move_down()
@@ -163,6 +185,11 @@ func _process(_delta: float) -> void:
 		move_left()
 	elif Input.is_action_just_pressed("right"):
 		move_right()
+
+	if Input.is_action_just_pressed("rotate_clockwise"):
+		rotate_block(1)
+	elif Input.is_action_just_pressed("rotate_counter"):
+		rotate_block(-1)
 
 func _on_move_timer_timeout() -> void:
 	move_down()

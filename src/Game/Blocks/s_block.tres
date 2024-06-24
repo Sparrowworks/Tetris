@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("1_e12vl")
 BlockTexture = ExtResource("1_i05fc")
-SpawnCoords = Array[Vector2i]([Vector2i(5, 0), Vector2i(6, 0), Vector2i(4, 1), Vector2i(5, 1)])
-id = 4
+SpawnCoords = [[Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(2, 1)], [Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(0, 2)]]
+PivotBlockIdx = 1
+ID = 0
