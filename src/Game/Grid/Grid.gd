@@ -67,7 +67,7 @@ func generate_new_block() -> void:
 
 #region MOVEMENT
 func move_down() -> void:
-  move_timer.stop()
+	move_timer.stop()
 	var updated_coords: Array = get_new_coords(Vector2i.DOWN)
 
 	if can_move_down(updated_coords):
