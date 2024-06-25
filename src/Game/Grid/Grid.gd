@@ -164,15 +164,14 @@ func rotate_block(direction: int) -> void:
 		active_rotation_id = 0
 	elif active_rotation_id < 0:
 		active_rotation_id = block_file.SpawnCoords.size()-1
-
-	var rotation_array: Array = block_file.SpawnCoords[active_rotation_id]
+	
 	var new_coords: Array = []
-
 	var pivot_coord: Vector2i = active_block_coords[block_file.PivotBlockIdx]
-
+	
 	for i in range(0,active_block_coords.size()):
-		var rot_coord: Vector2i = rotation_array[i]
-		var new_coord: Vector2i = Vector2i(pivot_coord.x+rot_coord.x,pivot_coord.y+rot_coord.y)
+		var translated_coord: Vector2i = active_block_coords[i] - pivot_coord
+		var rotated_coord: Vector2i = Vector2i(-translated_coord.y, translated_coord.x)
+		var new_coord: Vector2i = pivot_coord + rotated_coord
 		new_coords.append(new_coord)
 
 	update_coords(new_coords)
