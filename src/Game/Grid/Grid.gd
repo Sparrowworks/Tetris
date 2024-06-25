@@ -55,6 +55,7 @@ func generate_new_block() -> void:
 
 	active_block_coords.clear()
 	for coord: Vector2i in block_spawn_coords:
+		@warning_ignore("integer_division")
 		var new_coord: Vector2i = Vector2i(coord.x+int(MAX_X/2)-1,coord.y)
 		set_cell(0,new_coord,block_color,ATLAS_COORDS)
 		active_block_coords.append(new_coord)
