@@ -182,13 +182,11 @@ func rotate_block(direction: int) -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
 		move_down()
-
-	if Input.is_action_just_pressed("left"):
+	elif Input.is_action_just_pressed("left"):
 		move_left()
 	elif Input.is_action_just_pressed("right"):
 		move_right()
-
-	if Input.is_action_just_pressed("rotate_clockwise"):
+	elif Input.is_action_just_pressed("rotate_clockwise"):
 		rotate_block(1)
 	elif Input.is_action_just_pressed("rotate_counter"):
 		rotate_block(-1)

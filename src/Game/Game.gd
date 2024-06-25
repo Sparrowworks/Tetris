@@ -12,11 +12,9 @@ func exit() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("exit"):
 		exit()
-
-	if Input.is_action_just_pressed("pause"):
+	elif Input.is_action_just_pressed("pause"):
 		pause()
-
-	if Input.is_action_just_pressed("reset"):
+	elif Input.is_action_just_pressed("reset"):
 		reset()
 
 func _on_pause_pressed() -> void:
