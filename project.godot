@@ -25,6 +25,7 @@ Global="*res://src/Global/Global.gd"
 [debug]
 
 gdscript/warnings/untyped_declaration=2
+gdscript/warnings/integer_division=0
 
 [display]
 
@@ -38,6 +39,11 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Tetris"
+
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false
 
 [input]
 
@@ -92,11 +98,6 @@ reset={
 2d_physics/layer_1="blocks"
 2d_physics/layer_2="borders"
 2d_physics/layer_3="grid"
-
-[filesystem]
-
-import/blender/enabled=false
-import/fbx/enabled=false
 
 [rendering]
 

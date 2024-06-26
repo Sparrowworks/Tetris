@@ -67,7 +67,7 @@ func generate_new_block() -> void:
 
 #region MOVEMENT
 func move_down() -> void:
-  move_timer.stop()
+	move_timer.stop()
 	var updated_coords: Array = get_new_coords(Vector2i.DOWN)
 
 	if can_move_down(updated_coords):
@@ -111,16 +111,32 @@ func update_coords(coords: Array) -> void:
 #endregion MOVEMENT
 
 #region VERIFY_MOVEMENT
+func can_rotate(coords: Array) -> bool:
+	for coord: Vector2i in coords:
+		if coord.y > MAX_Y-1:
+			return false
+
+		if coord.x < 0 or coord.x >= MAX_X:
+			return false
+
+	return true
+
+func is_tile_taken(coord: Vector2i) -> bool:
+	if coord in active_block_coords: return false
+
+	var tile: int = get_cell_source_id(0,coord)
+
+	if tile != BLOCK_IDS.GREY:
+		return true
+
+	return false
+
 func can_move_down(coords: Array) -> bool:
 	for coord: Vector2i in coords:
 		if coord.y > MAX_Y-1:
 			return false
 
-		if coord in active_block_coords: continue
-
-		var tile: int = get_cell_source_id(0,coord)
-
-		if tile != BLOCK_IDS.GREY:
+		if is_tile_taken(coord):
 			return false
 
 	return true
@@ -130,11 +146,7 @@ func can_move_left(coords: Array) -> bool:
 		if coord.x < 0:
 			return false
 
-		if coord in active_block_coords: continue
-
-		var tile: int = get_cell_source_id(0,coord)
-
-		if tile != BLOCK_IDS.GREY:
+		if is_tile_taken(coord):
 			return false
 
 	return true
@@ -144,11 +156,7 @@ func can_move_right(coords: Array) -> bool:
 		if coord.x >= MAX_X:
 			return false
 
-		if coord in active_block_coords: continue
-
-		var tile: int = get_cell_source_id(0,coord)
-
-		if tile != BLOCK_IDS.GREY:
+		if is_tile_taken(coord):
 			return false
 
 	return true
@@ -156,16 +164,16 @@ func can_move_right(coords: Array) -> bool:
 #endregion
 
 func rotate_block(direction: int) -> void:
-	active_rotation_id += direction
+	var new_rotation_id: int = active_rotation_id
+	new_rotation_id += direction
 	var block_file: Block = BLOCK_FILES[active_block_id]
 
-	if active_rotation_id >= block_file.SpawnCoords.size():
-		active_rotation_id = 0
+	if new_rotation_id >= block_file.SpawnCoords.size():
+		new_rotation_id = 0
+	elif new_rotation_id < 0:
+		new_rotation_id = block_file.SpawnCoords.size()-1
 
-	if active_rotation_id < 0:
-		active_rotation_id = block_file.SpawnCoords.size()-1
-
-	var rotation_array: Array = block_file.SpawnCoords[active_rotation_id]
+	var rotation_array: Array = block_file.SpawnCoords[new_rotation_id]
 	var new_coords: Array = []
 
 	var pivot_coord: Vector2i = active_block_coords[block_file.PivotBlockIdx]
@@ -174,8 +182,15 @@ func rotate_block(direction: int) -> void:
 		var rot_coord: Vector2i = rotation_array[i]
 		var new_coord: Vector2i = Vector2i(pivot_coord.x+rot_coord.x,pivot_coord.y+rot_coord.y)
 
+		if is_tile_taken(new_coord):
+			return
+
 		new_coords.append(new_coord)
 
+	if not can_rotate(new_coords):
+		return
+
+	active_rotation_id = new_rotation_id
 	update_coords(new_coords)
 
 func _process(_delta: float) -> void:
