@@ -63,7 +63,7 @@ func clear_line(y: int) -> void:
 func generate_new_block() -> void:
 	check_line_clear()
 
-	var block_id: int = 5
+	var block_id: int = randi_range(0,6)
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array = block_resource.SpawnCoords[0]
 	var block_color: int = block_resource.ID
@@ -230,6 +230,18 @@ func rotate_block(direction: int, coords: Array) -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
 		move_down()
+
+	if Input.is_action_just_pressed("drop"):
+		move_timer.stop()
+
+		while true:
+			var move_coords: Array = get_new_coords(Vector2i.DOWN, active_block_coords)
+			if can_move_down(move_coords):
+				update_coords(active_block_coords, move_coords)
+			else:
+				break
+
+		generate_new_block()
 
 	if Input.is_action_just_pressed("left"):
 		move_left()
