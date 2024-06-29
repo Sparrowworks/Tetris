@@ -48,8 +48,22 @@ func clear_board(fast: bool = true) -> void:
 			for y in range(0,MAX_Y):
 				set_cell(0,Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
+func check_line_clear() -> void:
+	for y in range(MAX_Y, -1, -1):
+		for x in range(0, MAX_X+1):
+			if get_cell_source_id(0,Vector2i(x,y)) == BLOCK_IDS.GREY:
+				break
+
+			if x == MAX_X:
+				clear_line(y)
+
+func clear_line(y: int) -> void:
+	print(y)
+
 func generate_new_block() -> void:
-	var block_id: int = 6
+	check_line_clear()
+
+	var block_id: int = 5
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array = block_resource.SpawnCoords[0]
 	var block_color: int = block_resource.ID
@@ -116,7 +130,7 @@ func update_coords(old_coords: Array, new_coords: Array) -> void:
 
 #region VERIFY_MOVEMENT
 func can_rotate_left(coord: Vector2i) -> bool:
-	return coord.x > 0
+	return coord.x >= 0
 
 func can_rotate_right(coord: Vector2i) -> bool:
 	return coord.x < MAX_X
@@ -128,7 +142,6 @@ func is_tile_taken(coord: Vector2i, coords_to_check: Array) -> bool:
 	if coord in coords_to_check: return false
 
 	var tile: int = get_cell_source_id(0,coord)
-	print(coord, coords_to_check)
 
 	if tile == BLOCK_IDS.GREY or tile == -1:
 		return false
@@ -168,7 +181,6 @@ func can_move_right(coords: Array) -> bool:
 #endregion
 
 func rotate_block(direction: int, coords: Array) -> void:
-	prints("Used coords", coords)
 	rotation_tries += 1
 
 	if rotation_tries == 6:
@@ -193,25 +205,26 @@ func rotate_block(direction: int, coords: Array) -> void:
 		var rot_coord: Vector2i = rotation_array[i]
 		var new_coord: Vector2i = Vector2i(pivot_coord.x+rot_coord.x,pivot_coord.y+rot_coord.y)
 
-		if is_tile_taken(new_coord, coords):
+		if is_tile_taken(new_coord, active_block_coords):
 			return
 
 		new_coords.append(new_coord)
 
-	#prints("Old:",new_coords)
-	#for coord: Vector2i in new_coords:
-		#if not can_rotate_left(coord):
-			#var new: Array = get_new_coords(Vector2i.RIGHT, new_coords)
-			#prints("New:",new)
-			#update_coords(active_block_coords, new)
-#
-			#active_rotation_id = new_rotation_id
-			#rotation_tries = 0
-			#return
+	for coord: Vector2i in new_coords:
+		if not can_rotate_left(coord):
+			rotate_block(direction, get_new_coords(Vector2i.RIGHT, coords))
+			return
+
+		if not can_rotate_right(coord):
+			rotate_block(direction, get_new_coords(Vector2i.LEFT, coords))
+			return
+
+		if not can_rotate_down(coord):
+			rotate_block(direction, get_new_coords(Vector2i.UP, coords))
+			return
 
 	active_rotation_id = new_rotation_id
 	rotation_tries = 0
-
 	update_coords(active_block_coords, new_coords)
 
 func _process(_delta: float) -> void:
