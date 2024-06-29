@@ -52,6 +52,14 @@ func _ready() -> void:
 	clear_board()
 	generate_new_block()
 
+func pause_game() -> void:
+	set_process(false)
+	move_timer.stop()
+
+func unpause_game() -> void:
+	set_process(true)
+	move_timer.start()
+
 #region BOARD_FUNCTIONS
 
 func clear_board(fast: bool = true) -> void:

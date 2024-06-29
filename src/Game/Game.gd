@@ -1,9 +1,14 @@
 class_name Game extends Node2D
 
+signal pause_game()
+signal unpause_game()
+
 @onready var next_block_img: TextureRect = %NextBlock
 @onready var time_label: Label = %Time
 @onready var score_label: Label = %Score
 @onready var lines_label: Label = %Lines
+@onready var grid: Grid = %Grid
+@onready var pause_button: Button = %Pause
 
 const BLOCK_IMAGES: Array = [
 	"res://Assets/i.png",
@@ -19,11 +24,27 @@ var time: int = 0
 var score: int = 0
 var lines: int = 0
 
+var is_paused: bool = false
+
 func _ready() -> void:
 	$Time.start()
 
+	pause_game.connect(grid.pause_game)
+	unpause_game.connect(grid.unpause_game)
+
 func pause() -> void:
-	pass
+	is_paused = true
+	$Time.stop()
+	pause_game.emit()
+
+	pause_button.text = "(P) Unpause"
+
+func unpause() -> void:
+	is_paused = false
+	$Time.start()
+	unpause_game.emit()
+
+	pause_button.text = "(P)ause"
 
 func reset() -> void:
 	ComposerGD.ReloadScene("Game")
@@ -36,19 +57,13 @@ func _process(_delta: float) -> void:
 		exit()
 
 	if Input.is_action_just_pressed("pause"):
-		pause()
+		if is_paused:
+			unpause()
+		else:
+			pause()
 
 	if Input.is_action_just_pressed("reset"):
 		reset()
-
-func _on_pause_pressed() -> void:
-	pause()
-
-func _on_reset_pressed() -> void:
-	reset()
-
-func _on_exit_pressed() -> void:
-	exit()
 
 func _on_time_timeout() -> void:
 	time += 1

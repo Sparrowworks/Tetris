@@ -7,7 +7,8 @@ func _ready() -> void:
 
 	ComposerGD.AddScene("Game","res://src/Game/Game.tscn",
 	{
-		"instant_load":true
+		"instant_load":true,
+		"scene_parent":self
 	})
 
 	ComposerGD.AddScene("MainMenu","res://src/MainMenu/MainMenu.tscn",

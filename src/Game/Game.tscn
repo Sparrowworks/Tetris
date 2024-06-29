@@ -88,6 +88,7 @@ layout_mode = 2
 theme_override_constants/separation = 50
 
 [node name="Pause" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "(P)ause"
@@ -103,6 +104,7 @@ theme_override_font_sizes/font_size = 72
 text = "(E)xit"
 
 [node name="Grid" parent="." instance=ExtResource("2_ts7bs")]
+unique_name_in_owner = true
 position = Vector2(1380, -360)
 
 [node name="Time" type="Timer" parent="."]
