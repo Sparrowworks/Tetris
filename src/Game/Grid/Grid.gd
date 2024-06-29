@@ -1,8 +1,14 @@
 class_name Grid extends TileMap
 
+signal line_cleared()
+signal update_score(score: int)
+signal next_block_update(block: int)
+
 const MAX_X = 10
 const MAX_Y = 24
 const ATLAS_COORDS: Vector2i = Vector2i.ZERO
+const LINE_SCORE: int = 50
+
 enum BLOCK_IDS
 {
 	BLUE = 0,
@@ -34,6 +40,17 @@ var active_block_coords: Array = [
 var active_block_id: int = 0
 var active_rotation_id: int = 0
 var rotation_tries: int = 0
+var next_block_id: int = -1:
+	set(val):
+		next_block_id = val
+		if next_block_id != -1:
+			next_block_update.emit(next_block_id)
+
+var hard_dropped: bool = false
+
+var line_multiplier: float = 1.0
+var line_clear_difficulty: int = 0
+var difficulty_update: int = 2
 
 func _ready() -> void:
 	clear_board()
@@ -57,7 +74,22 @@ func check_line_clear() -> void:
 			if x == MAX_X-1:
 				clear_line(y)
 
+func update_difficulty() -> void:
+	difficulty_update += 1
+
+	move_timer.stop()
+	move_timer.wait_time = wrapf(move_timer.wait_time * 0.985,0.25,1.0)
+
 func clear_line(line_y: int) -> void:
+	line_cleared.emit()
+	line_multiplier += 0.05
+
+	update_score.emit(int(LINE_SCORE * line_multiplier))
+
+	line_clear_difficulty += 1
+	if line_clear_difficulty == difficulty_update:
+		update_difficulty()
+
 	for x in range(0,MAX_X):
 		set_cell(0,Vector2i(x,line_y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
@@ -66,25 +98,38 @@ func clear_line(line_y: int) -> void:
 			var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
 			set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
 
+	check_line_clear()
+
 func generate_new_block() -> void:
 	check_line_clear()
 
-	var block_id: int = randi_range(0,6)
+	var block_id: int
+
+	if next_block_id == -1:
+		block_id = randi_range(0,6)
+	else:
+		block_id = next_block_id
+
+	next_block_id = randi_range(0,6)
+
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array = block_resource.SpawnCoords[0]
 	var block_color: int = block_resource.ID
 
 	active_block_coords.clear()
+
 	for i in range(0,4):
 		var coord: Vector2i = block_spawn_coords[i]
 		var new_coord: Vector2i = Vector2i(coord.x+int(MAX_X/2)-1,coord.y)
 		set_cell(0,new_coord,block_color,ATLAS_COORDS)
 		active_block_coords.append(new_coord)
 
+	hard_dropped = false
 	active_block_id = block_id
 	active_rotation_id = 0
 	rotation_tries = 0
 
+	move_down()
 	move_down()
 
 #endregion
@@ -98,6 +143,7 @@ func move_down() -> void:
 		update_coords(active_block_coords, updated_coords)
 	else:
 		generate_new_block()
+		update_score.emit(active_block_id+randi_range(1,6))
 
 	move_timer.start()
 
@@ -238,6 +284,8 @@ func _process(_delta: float) -> void:
 		move_down()
 
 	if Input.is_action_just_pressed("drop"):
+		hard_dropped = true
+
 		move_timer.stop()
 
 		while true:

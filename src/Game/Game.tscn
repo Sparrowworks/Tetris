@@ -47,7 +47,8 @@ theme_override_font_sizes/font_size = 72
 text = "Next:"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/UI/NextContainer"]
+[node name="NextBlock" type="TextureRect" parent="CanvasLayer/Control/UI/NextContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 240)
 layout_mode = 2
 
@@ -56,18 +57,21 @@ layout_mode = 2
 theme_override_constants/separation = 50
 
 [node name="Time" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "Time: 0"
 horizontal_alignment = 1
 
 [node name="Score" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "Score: 0"
 horizontal_alignment = 1
 
 [node name="Lines" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = "Lines: 0"
@@ -100,6 +104,11 @@ text = "(E)xit"
 [node name="Grid" parent="." instance=ExtResource("2_ts7bs")]
 position = Vector2(1380, -360)
 
+[node name="Time" type="Timer" parent="."]
+
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="line_cleared" from="Grid" to="." method="_on_grid_line_cleared"]
+[connection signal="update_score" from="Grid" to="." method="_on_grid_update_score"]
+[connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

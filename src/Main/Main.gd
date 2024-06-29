@@ -1,6 +1,8 @@
 extends Node2D
 
 func _ready() -> void:
+	randomize()
+
 	Global.main = self
 
 	ComposerGD.AddScene("Game","res://src/Game/Game.tscn",
