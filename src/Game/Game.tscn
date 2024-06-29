@@ -51,6 +51,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 240)
 layout_mode = 2
+stretch_mode = 3
 
 [node name="StatsContainer" type="VBoxContainer" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
@@ -110,5 +111,6 @@ position = Vector2(1380, -360)
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="line_cleared" from="Grid" to="." method="_on_grid_line_cleared"]
+[connection signal="next_block_update" from="Grid" to="." method="_on_grid_next_block_update"]
 [connection signal="update_score" from="Grid" to="." method="_on_grid_update_score"]
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

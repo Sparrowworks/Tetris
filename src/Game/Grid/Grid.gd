@@ -40,11 +40,7 @@ var active_block_coords: Array = [
 var active_block_id: int = 0
 var active_rotation_id: int = 0
 var rotation_tries: int = 0
-var next_block_id: int = -1:
-	set(val):
-		next_block_id = val
-		if next_block_id != -1:
-			next_block_update.emit(next_block_id)
+var next_block_id: int = -1
 
 var hard_dropped: bool = false
 
@@ -111,6 +107,7 @@ func generate_new_block() -> void:
 		block_id = next_block_id
 
 	next_block_id = randi_range(0,6)
+	next_block_update.emit(next_block_id)
 
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array = block_resource.SpawnCoords[0]

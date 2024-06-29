@@ -5,6 +5,16 @@ class_name Game extends Node2D
 @onready var score_label: Label = %Score
 @onready var lines_label: Label = %Lines
 
+const BLOCK_IMAGES: Array = [
+	"res://Assets/i.png",
+	"res://Assets/j.png",
+	"res://Assets/l.png",
+	"res://Assets/o.png",
+	"res://Assets/s.png",
+	"res://Assets/t.png",
+	"res://Assets/z.png"
+]
+
 var time: int = 0
 var score: int = 0
 var lines: int = 0
@@ -16,7 +26,7 @@ func pause() -> void:
 	pass
 
 func reset() -> void:
-	pass
+	ComposerGD.ReloadScene("Game")
 
 func exit() -> void:
 	ComposerGD.ReplaceScene("Game","MainMenu",Global.main)
@@ -51,3 +61,9 @@ func _on_grid_update_score(s: int) -> void:
 func _on_grid_line_cleared() -> void:
 	lines += 1
 	lines_label.text = "Lines: " + str(lines)
+
+func _on_grid_next_block_update(block: int) -> void:
+	if next_block_img == null:
+		await _ready()
+
+	next_block_img.texture = load(BLOCK_IMAGES[block]) as Texture2D

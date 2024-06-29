@@ -141,14 +141,12 @@ namespace ComposerLib
             CreateScene(sceneToAdd);
         }
 
-        public async void ReloadScene(string name)
+        public void ReloadScene(string name)
         {
             var scene = GetScene(name);
             if (!CheckForNull(scene, "ReloadScene")) return;
 
             RemoveScene(name);
-
-            await ToSignal(this, SignalName.SceneRemoved);
 
             CreateScene(name);
         }
