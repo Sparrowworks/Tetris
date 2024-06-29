@@ -49,16 +49,22 @@ func clear_board(fast: bool = true) -> void:
 				set_cell(0,Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
 func check_line_clear() -> void:
-	for y in range(MAX_Y, -1, -1):
-		for x in range(0, MAX_X+1):
+	for y in range(MAX_Y-1, -1, -1):
+		for x in range(0, MAX_X):
 			if get_cell_source_id(0,Vector2i(x,y)) == BLOCK_IDS.GREY:
 				break
 
-			if x == MAX_X:
+			if x == MAX_X-1:
 				clear_line(y)
 
-func clear_line(y: int) -> void:
-	print(y)
+func clear_line(line_y: int) -> void:
+	for x in range(0,MAX_X):
+		set_cell(0,Vector2i(x,line_y),BLOCK_IDS.GREY,ATLAS_COORDS)
+
+	for y in range(line_y,0,-1):
+		for x in range(0, MAX_X):
+			var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
+			set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
 
 func generate_new_block() -> void:
 	check_line_clear()
