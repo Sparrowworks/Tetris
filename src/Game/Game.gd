@@ -29,8 +29,11 @@ var is_paused: bool = false
 func _ready() -> void:
 	$Time.start()
 
-	pause_game.connect(grid.pause_game)
-	unpause_game.connect(grid.unpause_game)
+	if not is_connected("pause_game", grid.pause_game):
+		pause_game.connect(grid.pause_game)
+	
+	if not is_connected("unpause_game", grid.unpause_game):
+		unpause_game.connect(grid.unpause_game)
 
 func pause() -> void:
 	is_paused = true
