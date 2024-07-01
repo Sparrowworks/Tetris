@@ -79,6 +79,6 @@ func _on_grid_line_cleared() -> void:
 
 func _on_grid_next_block_update(block: int) -> void:
 	if next_block_img == null:
-		await _ready()
+		await _ready
 
 	next_block_img.texture = load(BLOCK_IMAGES[block]) as Texture2D

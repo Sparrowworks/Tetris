@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://nc4bb6j7bfmr"]
+[gd_scene load_steps=21 format=3 uid="uid://nc4bb6j7bfmr"]
 
 [ext_resource type="Texture2D" uid="uid://wgmd2ma7wl3w" path="res://Assets/blue.png" id="1_5p1qk"]
 [ext_resource type="Texture2D" uid="uid://cegjprs2tb2l6" path="res://Assets/green.png" id="2_b4k2o"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dxumshpdfy5l2" path="res://Assets/purple.png" id="6_k15t0"]
 [ext_resource type="Texture2D" uid="uid://hkdn4v1857pv" path="res://Assets/red.png" id="7_mc56m"]
 [ext_resource type="Texture2D" uid="uid://bid8g13t4a2lh" path="res://Assets/yellow.png" id="8_kcxgx"]
+[ext_resource type="Texture2D" uid="uid://cjbfp5kih65j1" path="res://Assets/black.png" id="9_o3i82"]
 [ext_resource type="Script" path="res://src/Game/Grid/Grid.gd" id="9_seumx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_op7du"]
@@ -50,6 +51,11 @@ texture = ExtResource("3_3nnk3")
 texture_region_size = Vector2i(90, 90)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0frfi"]
+texture = ExtResource("9_o3i82")
+texture_region_size = Vector2i(90, 90)
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_nvjli"]
 tile_size = Vector2i(90, 90)
 sources/0 = SubResource("TileSetAtlasSource_op7du")
@@ -60,6 +66,7 @@ sources/4 = SubResource("TileSetAtlasSource_txhso")
 sources/5 = SubResource("TileSetAtlasSource_yi42v")
 sources/6 = SubResource("TileSetAtlasSource_orqht")
 sources/7 = SubResource("TileSetAtlasSource_wm8n3")
+sources/8 = SubResource("TileSetAtlasSource_0frfi")
 
 [node name="Grid" type="TileMap"]
 tile_set = SubResource("TileSet_nvjli")
