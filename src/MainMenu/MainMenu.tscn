@@ -1,6 +1,14 @@
-[gd_scene format=3 uid="uid://c4b282ks3fxoo"]
+[gd_scene load_steps=7 format=3 uid="uid://c4b282ks3fxoo"]
+
+[ext_resource type="Script" path="res://src/MainMenu/MainMenu.gd" id="1_26kxw"]
+[ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_pct73"]
+[ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="2_pruii"]
+[ext_resource type="Texture2D" uid="uid://boqrwy1aeyimk" path="res://Assets/Images/button_rectangle_depth_flat.png" id="3_wbc5e"]
+[ext_resource type="Texture2D" uid="uid://b0kscguwuxer8" path="res://Assets/Images/button_rectangle_depth_gloss.png" id="4_02bys"]
+[ext_resource type="Texture2D" uid="uid://cqpd2serlmwu7" path="res://Assets/Images/button_rectangle_border.png" id="4_x7pft"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_26kxw")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -12,12 +20,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_pruii")
+
 [node name="Title" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_top = 50.0
+offset_bottom = 281.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_pct73")
 theme_override_font_sizes/font_size = 144
 text = "TETRIS
 "
@@ -38,26 +54,87 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 75
 
-[node name="Play" type="Button" parent="CanvasLayer/Control/Buttons"]
+[node name="Play" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
-theme_override_font_sizes/font_size = 96
+texture_normal = ExtResource("4_02bys")
+texture_pressed = ExtResource("4_x7pft")
+texture_hover = ExtResource("3_wbc5e")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Play"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 64
 text = "PLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Settings" type="Button" parent="CanvasLayer/Control/Buttons"]
+[node name="Settings" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
-theme_override_font_sizes/font_size = 96
+texture_normal = ExtResource("4_02bys")
+texture_pressed = ExtResource("4_x7pft")
+texture_hover = ExtResource("3_wbc5e")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 48
 text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Credits" type="Button" parent="CanvasLayer/Control/Buttons"]
+[node name="Credits" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
-theme_override_font_sizes/font_size = 96
+texture_normal = ExtResource("4_02bys")
+texture_pressed = ExtResource("4_x7pft")
+texture_hover = ExtResource("3_wbc5e")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Credits"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 56
 text = "CREDITS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Exit" type="Button" parent="CanvasLayer/Control/Buttons"]
+[node name="Exit" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
-theme_override_font_sizes/font_size = 96
+texture_normal = ExtResource("4_02bys")
+texture_pressed = ExtResource("4_x7pft")
+texture_hover = ExtResource("3_wbc5e")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Exit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 64
 text = "EXIT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Buttons/Exit" to="." method="_on_exit_pressed"]
