@@ -8,7 +8,7 @@ signal unpause_game()
 @onready var score_label: Label = %Score
 @onready var lines_label: Label = %Lines
 @onready var grid: Grid = %Grid
-@onready var pause_button: TextureButton = %Pause
+@onready var pause_text: Label = %PauseText
 
 const BLOCK_IMAGES: Array = [
 	"res://Assets/Images/i.png",
@@ -47,7 +47,7 @@ func pause() -> void:
 	$GameTheme.stream_paused = true
 	pause_game.emit()
 
-	pause_button.text = "(P) Unpause"
+	pause_text.text = "(P) Unpause"
 
 func unpause() -> void:
 	is_paused = false
@@ -55,7 +55,7 @@ func unpause() -> void:
 	$GameTheme.stream_paused = false
 	unpause_game.emit()
 
-	pause_button.text = "(P)ause"
+	pause_text.text = "(P)ause"
 
 func reset() -> void:
 	$GameTheme.stop()

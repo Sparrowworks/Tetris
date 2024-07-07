@@ -370,6 +370,7 @@ func _process(_delta: float) -> void:
 			else:
 				break
 
+		update_score.emit(int((active_block_id+randi_range(1,6)/2)))
 		generate_new_block()
 
 	if Input.is_action_just_pressed("left"):
