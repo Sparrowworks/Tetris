@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://04o6dj0y088j"]
+[gd_scene load_steps=8 format=3 uid="uid://04o6dj0y088j"]
 
 [ext_resource type="Script" path="res://src/Game/Game.gd" id="1_5odnr"]
+[ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_ij6hr"]
 [ext_resource type="PackedScene" uid="uid://nc4bb6j7bfmr" path="res://src/Game/Grid/Grid.tscn" id="2_ts7bs"]
+[ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="2_uxx05"]
+[ext_resource type="Texture2D" uid="uid://b0kscguwuxer8" path="res://Assets/Images/button_rectangle_depth_gloss.png" id="3_2lxaw"]
+[ext_resource type="Texture2D" uid="uid://cqpd2serlmwu7" path="res://Assets/Images/button_rectangle_border.png" id="4_ieyuk"]
+[ext_resource type="Texture2D" uid="uid://boqrwy1aeyimk" path="res://Assets/Images/button_rectangle_depth_flat.png" id="5_2onu0"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5odnr")
@@ -15,6 +20,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 3840.0
+offset_bottom = 2160.0
+texture = ExtResource("2_uxx05")
 
 [node name="UI" type="VBoxContainer" parent="CanvasLayer/Control"]
 custom_minimum_size = Vector2(960, 1920)
@@ -30,10 +41,11 @@ offset_right = -200.0
 offset_bottom = 960.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 50
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
 theme_override_font_sizes/font_size = 144
 text = "TETRIS"
 horizontal_alignment = 1
@@ -43,6 +55,7 @@ layout_mode = 2
 
 [node name="Next" type="Label" parent="CanvasLayer/Control/UI/NextContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
 theme_override_font_sizes/font_size = 72
 text = "Next:"
 horizontal_alignment = 1
@@ -60,6 +73,7 @@ theme_override_constants/separation = 50
 [node name="Time" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
 theme_override_font_sizes/font_size = 72
 text = "Time: 0"
 horizontal_alignment = 1
@@ -67,6 +81,7 @@ horizontal_alignment = 1
 [node name="Score" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
 theme_override_font_sizes/font_size = 72
 text = "Score: 0"
 horizontal_alignment = 1
@@ -74,6 +89,7 @@ horizontal_alignment = 1
 [node name="Lines" type="Label" parent="CanvasLayer/Control/UI/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
 theme_override_font_sizes/font_size = 72
 text = "Lines: 0"
 horizontal_alignment = 1
@@ -81,38 +97,87 @@ horizontal_alignment = 1
 [node name="HSeparator" type="HSeparator" parent="CanvasLayer/Control/UI"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 150
+theme_override_constants/separation = 50
 
 [node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="Pause" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+[node name="Pause" type="TextureButton" parent="CanvasLayer/Control/UI/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 72
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_2lxaw")
+texture_pressed = ExtResource("4_ieyuk")
+texture_hover = ExtResource("5_2onu0")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 56
 text = "(P)ause"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Reset" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+[node name="Reset" type="TextureButton" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 72
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_2lxaw")
+texture_pressed = ExtResource("4_ieyuk")
+texture_hover = ExtResource("5_2onu0")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Reset"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 56
 text = "(R)eset"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Exit" type="Button" parent="CanvasLayer/Control/UI/ButtonContainer"]
+[node name="Exit" type="TextureButton" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 72
-text = "(E)xit"
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_2lxaw")
+texture_pressed = ExtResource("4_ieyuk")
+texture_hover = ExtResource("3_2lxaw")
 
-[node name="Grid" parent="." instance=ExtResource("2_ts7bs")]
+[node name="Label" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Exit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 56
+text = "(E)xit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Grid" parent="CanvasLayer" instance=ExtResource("2_ts7bs")]
 unique_name_in_owner = true
 position = Vector2(1380, -360)
 
 [node name="Time" type="Timer" parent="."]
 
+[node name="GameTheme" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="line_cleared" from="Grid" to="." method="_on_grid_line_cleared"]
-[connection signal="next_block_update" from="Grid" to="." method="_on_grid_next_block_update"]
-[connection signal="update_score" from="Grid" to="." method="_on_grid_update_score"]
+[connection signal="game_over_signal" from="CanvasLayer/Grid" to="." method="_on_grid_game_over_signal"]
+[connection signal="line_cleared" from="CanvasLayer/Grid" to="." method="_on_grid_line_cleared"]
+[connection signal="next_block_update" from="CanvasLayer/Grid" to="." method="_on_grid_next_block_update"]
+[connection signal="update_score" from="CanvasLayer/Grid" to="." method="_on_grid_update_score"]
 [connection signal="timeout" from="Time" to="." method="_on_time_timeout"]

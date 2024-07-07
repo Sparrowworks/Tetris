@@ -1,0 +1,149 @@
+[gd_scene load_steps=9 format=3 uid="uid://5v0eh4l1n16k"]
+
+[ext_resource type="Script" path="res://src/Settings/Settings.gd" id="1_36aqo"]
+[ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="1_m2e63"]
+[ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_dxhgy"]
+[ext_resource type="Texture2D" uid="uid://b0kscguwuxer8" path="res://Assets/Images/button_rectangle_depth_gloss.png" id="3_p31uq"]
+[ext_resource type="Texture2D" uid="uid://cqpd2serlmwu7" path="res://Assets/Images/button_rectangle_border.png" id="4_yhtvp"]
+[ext_resource type="Texture2D" uid="uid://ckdr2juh16k01" path="res://Assets/Images/grabber.png" id="5_51d4c"]
+[ext_resource type="Texture2D" uid="uid://boqrwy1aeyimk" path="res://Assets/Images/button_rectangle_depth_flat.png" id="5_c7sgs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxxmo"]
+bg_color = Color(0, 0.4, 0.85098, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.189367, 0.643335, 0.939686, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_size = 25
+
+[node name="Settings" type="Node2D"]
+script = ExtResource("1_36aqo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_m2e63")
+
+[node name="Title" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 281.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_dxhgy")
+theme_override_font_sizes/font_size = 144
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.5
+offset_top = -51.5
+offset_right = 166.5
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 500
+alignment = 1
+
+[node name="MusicBox" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(1200, 0)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="MusicVolume" type="Label" parent="CanvasLayer/Control/HBoxContainer/MusicBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_dxhgy")
+theme_override_font_sizes/font_size = 64
+text = "Music Volume: 100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="CanvasLayer/Control/HBoxContainer/MusicBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_icons/grabber = ExtResource("5_51d4c")
+theme_override_icons/grabber_highlight = ExtResource("5_51d4c")
+theme_override_icons/grabber_disabled = ExtResource("5_51d4c")
+theme_override_styles/slider = SubResource("StyleBoxFlat_gxxmo")
+value = 50.0
+rounded = true
+ticks_on_borders = true
+
+[node name="SfxBox" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(1200, 0)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="SfxVolume" type="Label" parent="CanvasLayer/Control/HBoxContainer/SfxBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_dxhgy")
+theme_override_font_sizes/font_size = 64
+text = "SFX Volume: 100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxSlider" type="HSlider" parent="CanvasLayer/Control/HBoxContainer/SfxBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_icons/grabber = ExtResource("5_51d4c")
+theme_override_icons/grabber_highlight = ExtResource("5_51d4c")
+theme_override_icons/grabber_disabled = ExtResource("5_51d4c")
+theme_override_styles/slider = SubResource("StyleBoxFlat_gxxmo")
+value = 50.0
+rounded = true
+ticks_on_borders = true
+
+[node name="Back" type="TextureButton" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+offset_left = 1670.0
+offset_top = 1500.0
+offset_right = 2170.0
+offset_bottom = 1667.0
+texture_normal = ExtResource("3_p31uq")
+texture_pressed = ExtResource("4_yhtvp")
+texture_hover = ExtResource("5_c7sgs")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Back"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_dxhgy")
+theme_override_font_sizes/font_size = 64
+text = "MENU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="drag_ended" from="CanvasLayer/Control/HBoxContainer/MusicBox/MusicSlider" to="." method="_on_music_slider_drag_ended"]
+[connection signal="value_changed" from="CanvasLayer/Control/HBoxContainer/MusicBox/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="drag_ended" from="CanvasLayer/Control/HBoxContainer/SfxBox/SfxSlider" to="." method="_on_sfx_slider_drag_ended"]
+[connection signal="value_changed" from="CanvasLayer/Control/HBoxContainer/SfxBox/SfxSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="CanvasLayer/Control/Back" to="." method="_on_back_pressed"]

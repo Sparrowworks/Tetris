@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var menu_theme: AudioStreamPlayer = $MenuTheme
+
 func _ready() -> void:
 	randomize()
 
@@ -17,3 +19,22 @@ func _ready() -> void:
 		"instant_create":true,
 		"scene_parent":self
 	})
+
+	ComposerGD.AddScene("Settings","res://src/Settings/Settings.tscn",
+	{
+		"instant_load":true,
+		"scene_parent":self
+	})
+
+	ComposerGD.AddScene("Credits","res://src/Credits/Credits.tscn",
+	{
+		"instant_load":true,
+		"scene_parent":self
+	})
+
+func play_menu_theme() -> void:
+	if not menu_theme.playing:
+		menu_theme.play()
+
+func stop_menu_theme() -> void:
+	menu_theme.stop()

@@ -31,6 +31,10 @@ var is_disabled_input: bool = false
 func _ready() -> void:
 	$Time.start()
 
+	var theme: int = randi_range(1,2)
+	$GameTheme.stream = load("res://Assets/Audio/gameTheme" + str(theme) + ".mp3")
+	$GameTheme.play()
+
 	if not is_connected("pause_game", grid.pause_game):
 		pause_game.connect(grid.pause_game)
 
@@ -40,6 +44,7 @@ func _ready() -> void:
 func pause() -> void:
 	is_paused = true
 	$Time.stop()
+	$GameTheme.stream_paused = true
 	pause_game.emit()
 
 	pause_button.text = "(P) Unpause"
@@ -47,14 +52,17 @@ func pause() -> void:
 func unpause() -> void:
 	is_paused = false
 	$Time.start()
+	$GameTheme.stream_paused = false
 	unpause_game.emit()
 
 	pause_button.text = "(P)ause"
 
 func reset() -> void:
+	$GameTheme.stop()
 	ComposerGD.ReloadScene("Game")
 
 func exit() -> void:
+	$GameTheme.stop()
 	ComposerGD.ReplaceScene("Game","MainMenu",Global.main)
 
 func _process(_delta: float) -> void:
