@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://b5v7md5q4du7w"]
 
-[ext_resource type="Texture2D" uid="uid://hkdn4v1857pv" path="res://Assets/red.png" id="1_jr7l0"]
+[ext_resource type="Texture2D" uid="uid://hkdn4v1857pv" path="res://Assets/Images/red.png" id="1_jr7l0"]
 [ext_resource type="Script" path="res://src/Game/Blocks/Block.gd" id="1_yrnqm"]
 
 [resource]

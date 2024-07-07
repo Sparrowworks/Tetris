@@ -8,16 +8,16 @@ signal unpause_game()
 @onready var score_label: Label = %Score
 @onready var lines_label: Label = %Lines
 @onready var grid: Grid = %Grid
-@onready var pause_button: Button = %Pause
+@onready var pause_button: TextureButton = %Pause
 
 const BLOCK_IMAGES: Array = [
-	"res://Assets/i.png",
-	"res://Assets/j.png",
-	"res://Assets/l.png",
-	"res://Assets/o.png",
-	"res://Assets/s.png",
-	"res://Assets/t.png",
-	"res://Assets/z.png"
+	"res://Assets/Images/i.png",
+	"res://Assets/Images/j.png",
+	"res://Assets/Images/l.png",
+	"res://Assets/Images/o.png",
+	"res://Assets/Images/s.png",
+	"res://Assets/Images/t.png",
+	"res://Assets/Images/z.png"
 ]
 
 var time: int = 0
@@ -26,12 +26,14 @@ var lines: int = 0
 
 var is_paused: bool = false
 
+var is_disabled_input: bool = false
+
 func _ready() -> void:
 	$Time.start()
 
 	if not is_connected("pause_game", grid.pause_game):
 		pause_game.connect(grid.pause_game)
-	
+
 	if not is_connected("unpause_game", grid.unpause_game):
 		unpause_game.connect(grid.unpause_game)
 
@@ -56,6 +58,9 @@ func exit() -> void:
 	ComposerGD.ReplaceScene("Game","MainMenu",Global.main)
 
 func _process(_delta: float) -> void:
+	if is_disabled_input:
+		return
+
 	if Input.is_action_just_pressed("exit"):
 		exit()
 
@@ -82,6 +87,10 @@ func _on_grid_line_cleared() -> void:
 
 func _on_grid_next_block_update(block: int) -> void:
 	if next_block_img == null:
-		await _ready
+		_ready()
 
 	next_block_img.texture = load(BLOCK_IMAGES[block]) as Texture2D
+
+func _on_grid_game_over_signal() -> void:
+	$Time.stop()
+	next_block_img.texture = null

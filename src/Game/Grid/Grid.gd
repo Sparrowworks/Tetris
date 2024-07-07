@@ -3,11 +3,13 @@ class_name Grid extends TileMap
 signal line_cleared()
 signal update_score(score: int)
 signal next_block_update(block: int)
+signal game_over_signal()
 
 const MAX_X = 10
 const MAX_Y = 24
 const ATLAS_COORDS: Vector2i = Vector2i.ZERO
 const LINE_SCORE: int = 50
+const MAX_ROTATE_TRIES: int = 0
 
 enum BLOCK_IDS
 {
@@ -18,7 +20,8 @@ enum BLOCK_IDS
 	GREEN = 4,
 	PURPLE = 5,
 	RED = 6,
-	GREY = 7
+	GREY = 7,
+	BLACK = 8,
 }
 
 const BLOCK_FILES: Array[Block] = [
@@ -37,6 +40,10 @@ var active_block_coords: Array = [
 
 ]
 
+var ghost_block_coords: Array = [
+
+]
+
 var active_block_id: int = 0
 var active_rotation_id: int = 0
 var rotation_tries: int = 0
@@ -48,8 +55,11 @@ var line_multiplier: float = 1.0
 var line_clear_difficulty: int = 0
 var difficulty_update: int = 2
 
+var tetromino_bag: Array = []
+
 func _ready() -> void:
 	clear_board()
+	generate_bag()
 	generate_new_block()
 
 func pause_game() -> void:
@@ -61,6 +71,17 @@ func unpause_game() -> void:
 	move_timer.start()
 
 #region BOARD_FUNCTIONS
+
+func check_for_game_over() -> bool:
+	for x in range(0,MAX_X):
+		if get_cell_source_id(0,Vector2i(x,0)) != BLOCK_IDS.GREY:
+			return true
+
+	return false
+
+func game_over() -> void:
+	move_timer.stop()
+	game_over_signal.emit()
 
 func clear_board(fast: bool = true) -> void:
 	if fast:
@@ -104,17 +125,30 @@ func clear_line(line_y: int) -> void:
 
 	check_line_clear()
 
+func generate_bag() -> void:
+	randomize()
+	tetromino_bag = range(0,6)
+	tetromino_bag.shuffle()
+
 func generate_new_block() -> void:
+	ghost_block_coords.clear()
 	check_line_clear()
+
+	if check_for_game_over():
+		game_over()
+		return
 
 	var block_id: int
 
 	if next_block_id == -1:
-		block_id = randi_range(0,6)
+		block_id = tetromino_bag.pop_front()
 	else:
 		block_id = next_block_id
 
-	next_block_id = randi_range(0,6)
+	if tetromino_bag == []:
+		generate_bag()
+
+	next_block_id = tetromino_bag.pop_front()
 	next_block_update.emit(next_block_id)
 
 	var block_resource: Block = BLOCK_FILES[block_id]
@@ -133,6 +167,8 @@ func generate_new_block() -> void:
 	active_block_id = block_id
 	active_rotation_id = 0
 	rotation_tries = 0
+
+	draw_ghost_block()
 
 	move_down()
 	move_down()
@@ -157,12 +193,14 @@ func move_left() -> void:
 
 	if can_move_left(updated_coords):
 		update_coords(active_block_coords, updated_coords)
+		draw_ghost_block()
 
 func move_right() -> void:
 	var updated_coords: Array = get_new_coords(Vector2i.RIGHT, active_block_coords)
 
 	if can_move_right(updated_coords):
 		update_coords(active_block_coords, updated_coords)
+		draw_ghost_block()
 
 func get_new_coords(vector: Vector2i, coords: Array) -> Array:
 	var new_coords: Array = []
@@ -183,64 +221,10 @@ func update_coords(old_coords: Array, new_coords: Array) -> void:
 	for coord: Vector2i in active_block_coords:
 		set_cell(0,coord,active_block_id,ATLAS_COORDS)
 
-#endregion MOVEMENT
-
-#region VERIFY_MOVEMENT
-func can_rotate_left(coord: Vector2i) -> bool:
-	return coord.x >= 0
-
-func can_rotate_right(coord: Vector2i) -> bool:
-	return coord.x < MAX_X
-
-func can_rotate_down(coord: Vector2i) -> bool:
-	return coord.y < MAX_Y-1
-
-func is_tile_taken(coord: Vector2i, coords_to_check: Array) -> bool:
-	if coord in coords_to_check: return false
-
-	var tile: int = get_cell_source_id(0,coord)
-
-	if tile == BLOCK_IDS.GREY or tile == -1:
-		return false
-
-	return true
-
-func can_move_down(coords: Array) -> bool:
-	for coord: Vector2i in coords:
-		if coord.y > MAX_Y-1:
-			return false
-
-		if is_tile_taken(coord, active_block_coords):
-			return false
-
-	return true
-
-func can_move_left(coords: Array) -> bool:
-	for coord: Vector2i in coords:
-		if coord.x < 0:
-			return false
-
-		if is_tile_taken(coord, active_block_coords):
-			return false
-
-	return true
-
-func can_move_right(coords: Array) -> bool:
-	for coord: Vector2i in coords:
-		if coord.x >= MAX_X:
-			return false
-
-		if is_tile_taken(coord, active_block_coords):
-			return false
-
-	return true
-
-#endregion
-
 func rotate_block(direction: int, coords: Array) -> void:
 	rotation_tries += 1
 
-	if rotation_tries == 6:
+	if rotation_tries == MAX_ROTATE_TRIES:
 		return
 
 	var new_rotation_id: int = active_rotation_id
@@ -283,6 +267,92 @@ func rotate_block(direction: int, coords: Array) -> void:
 	active_rotation_id = new_rotation_id
 	rotation_tries = 0
 	update_coords(active_block_coords, new_coords)
+	draw_ghost_block()
+
+#endregion MOVEMENT
+
+#region VERIFY_MOVEMENT
+func can_rotate_left(coord: Vector2i) -> bool:
+	return coord.x >= 0
+
+func can_rotate_right(coord: Vector2i) -> bool:
+	return coord.x < MAX_X
+
+func can_rotate_down(coord: Vector2i) -> bool:
+	return coord.y < MAX_Y-1
+
+func is_tile_taken(coord: Vector2i, coords_to_check: Array) -> bool:
+	if coord in coords_to_check: return false
+
+	var tile: int = get_cell_source_id(0,coord)
+
+	if tile == BLOCK_IDS.GREY or tile == -1 or tile == BLOCK_IDS.BLACK:
+		return false
+
+	return true
+
+func can_move_down(coords: Array) -> bool:
+	for coord: Vector2i in coords:
+		if coord.y > MAX_Y-1:
+			return false
+
+		if is_tile_taken(coord, active_block_coords):
+			return false
+
+	return true
+
+func can_move_left(coords: Array) -> bool:
+	for coord: Vector2i in coords:
+		if coord.x < 0:
+			return false
+
+		if is_tile_taken(coord, active_block_coords):
+			return false
+
+	return true
+
+func can_move_right(coords: Array) -> bool:
+	for coord: Vector2i in coords:
+		if coord.x >= MAX_X:
+			return false
+
+		if is_tile_taken(coord, active_block_coords):
+			return false
+
+	return true
+
+#endregion
+
+#region GHOST_BLOCK
+func clear_previous_ghost() -> void:
+	for coord: Vector2i in ghost_block_coords:
+		if coord in active_block_coords:
+			continue
+
+		set_cell(0,coord,BLOCK_IDS.GREY,ATLAS_COORDS)
+
+func update_ghost_coords() -> void:
+	ghost_block_coords = active_block_coords
+
+	while true:
+		var move_coords: Array = get_new_coords(Vector2i.DOWN, ghost_block_coords)
+		if can_move_down(move_coords):
+			ghost_block_coords = move_coords
+		else:
+			break
+
+func draw_ghost_block() -> void:
+	clear_previous_ghost()
+
+	update_ghost_coords()
+
+	for coord: Vector2i in ghost_block_coords:
+		if coord in active_block_coords:
+			continue
+
+		set_cell(0, coord, BLOCK_IDS.BLACK, ATLAS_COORDS)
+
+#endregion
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("down"):
