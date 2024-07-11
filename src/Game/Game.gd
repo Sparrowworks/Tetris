@@ -9,6 +9,12 @@ signal unpause_game()
 @onready var lines_label: Label = %Lines
 @onready var grid: Grid = %Grid
 @onready var pause_text: Label = %PauseText
+@onready var ui: VBoxContainer = %UI
+@onready var final_time: Label = %FinalTime
+@onready var final_score: Label = %FinalScore
+@onready var final_line: Label = %FinalLine
+
+@onready var game_over_panel: Control = %GameOverPanel
 
 const BLOCK_IMAGES: Array = [
 	"res://Assets/Images/i.png",
@@ -99,6 +105,32 @@ func _on_grid_next_block_update(block: int) -> void:
 
 	next_block_img.texture = load(BLOCK_IMAGES[block]) as Texture2D
 
-func _on_grid_game_over_signal() -> void:
+func _on_grid_game_over_music() -> void:
+	is_disabled_input = true
 	$Time.stop()
-	next_block_img.texture = null
+	game_over_panel.show()
+
+	var music_tween: Tween = get_tree().create_tween()
+	music_tween.tween_property($GameTheme,"volume_db",0.0,2.0)
+	music_tween.tween_callback($GameTheme.stop)
+
+func _on_grid_game_over_signal() -> void:
+	final_time.text = "Final Time: " + str(time)
+	final_score.text = "Final Score: " + str(score)
+	final_line.text = "Lines Cleared: " + str(lines)
+
+	var panel_tween: Tween = get_tree().create_tween()
+	panel_tween.tween_property(ui,"modulate:a",0.0,2.0)
+	panel_tween.tween_property(game_over_panel,"modulate:a",1.0,2.0)
+
+func _on_reset_pressed() -> void:
+	reset()
+
+func _on_exit_pressed() -> void:
+	exit()
+
+func _on_pause_pressed() -> void:
+	if is_paused:
+		unpause()
+	else:
+		pause()

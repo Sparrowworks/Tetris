@@ -3,6 +3,8 @@ class_name Grid extends TileMap
 signal line_cleared()
 signal update_score(score: int)
 signal next_block_update(block: int)
+
+signal game_over_music()
 signal game_over_signal()
 
 const MAX_X = 10
@@ -57,6 +59,8 @@ var difficulty_update: int = 2
 
 var tetromino_bag: Array = []
 
+var is_game_over: bool = false
+
 func _ready() -> void:
 	clear_board()
 	generate_bag()
@@ -74,14 +78,28 @@ func unpause_game() -> void:
 
 func check_for_game_over() -> bool:
 	for x in range(0,MAX_X):
-		if get_cell_source_id(0,Vector2i(x,0)) != BLOCK_IDS.GREY:
-			return true
+		for y in range(0,6):
+			var vector: Vector2i = Vector2i(x,y)
+			if get_cell_source_id(0,vector) != BLOCK_IDS.GREY and not active_block_coords.has(vector):
+				return true
 
 	return false
 
 func game_over() -> void:
-	move_timer.stop()
+	game_over_music.emit()
+	move_timer.paused = true
+
+	for y in range(23,-1,-1):
+		clear_line_game_over(y)
+		await get_tree().create_timer(0.1).timeout
+
 	game_over_signal.emit()
+
+func clear_line_game_over(y: int) -> void:
+	for x in range(0,int(MAX_X/2)+1):
+		set_cell(0,Vector2i(x,y),-1)
+		set_cell(0,Vector2i(MAX_X-x,y),-1)
+		await get_tree().create_timer(0.05).timeout
 
 func clear_board(fast: bool = true) -> void:
 	if fast:
@@ -99,6 +117,13 @@ func check_line_clear() -> void:
 			if x == MAX_X-1:
 				clear_line(y)
 
+func is_line_empty(y: int) -> bool:
+	for x in range(0, MAX_X):
+		if get_cell_source_id(0,Vector2i(x,y)) != BLOCK_IDS.GREY:
+			return false
+
+	return true
+
 func update_difficulty() -> void:
 	difficulty_update += 1
 
@@ -115,10 +140,15 @@ func clear_line(line_y: int) -> void:
 	if line_clear_difficulty == difficulty_update:
 		update_difficulty()
 
-	for x in range(0,MAX_X):
+	for x in range(0,int(MAX_X/2)+1):
 		set_cell(0,Vector2i(x,line_y),BLOCK_IDS.GREY,ATLAS_COORDS)
+		set_cell(0,Vector2i(wrap(MAX_X-x,0,10),line_y),BLOCK_IDS.GREY,ATLAS_COORDS)
+		await get_tree().create_timer(0.05).timeout
 
 	for y in range(line_y,0,-1):
+		if is_line_empty(y+1):
+			break
+
 		for x in range(0, MAX_X):
 			var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
 			set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
@@ -131,12 +161,17 @@ func generate_bag() -> void:
 	tetromino_bag.shuffle()
 
 func generate_new_block() -> void:
-	ghost_block_coords.clear()
-	check_line_clear()
-
 	if check_for_game_over():
+		is_game_over = true
 		game_over()
 		return
+
+	if is_game_over:
+		move_timer.paused = true
+		return
+
+	ghost_block_coords.clear()
+	check_line_clear()
 
 	var block_id: int
 

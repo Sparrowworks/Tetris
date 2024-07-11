@@ -20,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Background" type="TextureRect" parent="CanvasLayer/Control"]
 layout_mode = 0
@@ -28,6 +29,7 @@ offset_bottom = 2160.0
 texture = ExtResource("2_uxx05")
 
 [node name="UI" type="VBoxContainer" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(960, 1920)
 layout_mode = 1
 anchors_preset = 6
@@ -100,6 +102,7 @@ layout_mode = 2
 theme_override_constants/separation = 50
 
 [node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/Control/UI"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 50
 
@@ -118,8 +121,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_fonts/font = ExtResource("2_ij6hr")
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 42
 text = "(P)ause"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -138,6 +142,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_fonts/font = ExtResource("2_ij6hr")
 theme_override_font_sizes/font_size = 56
 text = "(R)eset"
@@ -152,6 +157,134 @@ texture_pressed = ExtResource("4_ieyuk")
 texture_hover = ExtResource("3_2lxaw")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Exit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 56
+text = "(E)xit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverPanel" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -756.5
+offset_top = 50.0
+offset_right = 756.5
+offset_bottom = 281.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 144
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -685.0
+offset_top = -574.0
+offset_right = 685.0
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="FinalTime" type="Label" parent="CanvasLayer/GameOverPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 72
+text = "Your final time: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinalScore" type="Label" parent="CanvasLayer/GameOverPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 72
+text = "Your final score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinalLine" type="Label" parent="CanvasLayer/GameOverPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 72
+text = "Your final lines: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = 116.5
+offset_right = 250.0
+offset_bottom = 283.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Reset" type="TextureButton" parent="CanvasLayer/GameOverPanel/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_2lxaw")
+texture_pressed = ExtResource("4_ieyuk")
+texture_hover = ExtResource("5_2onu0")
+
+[node name="ResetText" type="Label" parent="CanvasLayer/GameOverPanel/Buttons/Reset"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ij6hr")
+theme_override_font_sizes/font_size = 56
+text = "(R)eset"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Exit" type="TextureButton" parent="CanvasLayer/GameOverPanel/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_2lxaw")
+texture_pressed = ExtResource("4_ieyuk")
+texture_hover = ExtResource("5_2onu0")
+
+[node name="ExitText" type="Label" parent="CanvasLayer/GameOverPanel/Buttons/Exit"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,6 +309,9 @@ bus = &"Music"
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/GameOverPanel/Buttons/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="CanvasLayer/GameOverPanel/Buttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="game_over_music" from="CanvasLayer/Grid" to="." method="_on_grid_game_over_music"]
 [connection signal="game_over_signal" from="CanvasLayer/Grid" to="." method="_on_grid_game_over_signal"]
 [connection signal="line_cleared" from="CanvasLayer/Grid" to="." method="_on_grid_line_cleared"]
 [connection signal="next_block_update" from="CanvasLayer/Grid" to="." method="_on_grid_next_block_update"]
