@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://04o6dj0y088j"]
+[gd_scene load_steps=9 format=3 uid="uid://04o6dj0y088j"]
 
 [ext_resource type="Script" path="res://src/Game/Game.gd" id="1_5odnr"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_ij6hr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b0kscguwuxer8" path="res://Assets/Images/button_rectangle_depth_gloss.png" id="3_2lxaw"]
 [ext_resource type="Texture2D" uid="uid://cqpd2serlmwu7" path="res://Assets/Images/button_rectangle_border.png" id="4_ieyuk"]
 [ext_resource type="Texture2D" uid="uid://boqrwy1aeyimk" path="res://Assets/Images/button_rectangle_depth_flat.png" id="5_2onu0"]
+[ext_resource type="AudioStream" uid="uid://drbea8cxd6f4" path="res://Assets/Audio/gameoverTheme.mp3" id="8_twthh"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5odnr")
@@ -304,6 +305,12 @@ position = Vector2(1380, -360)
 [node name="Time" type="Timer" parent="."]
 
 [node name="GameTheme" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+bus = &"Music"
+
+[node name="GameOverTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_twthh")
+volume_db = -10.0
 bus = &"Music"
 
 [connection signal="pressed" from="CanvasLayer/Control/UI/ButtonContainer/Pause" to="." method="_on_pause_pressed"]

@@ -11,7 +11,7 @@ const MAX_X = 10
 const MAX_Y = 24
 const ATLAS_COORDS: Vector2i = Vector2i.ZERO
 const LINE_SCORE: int = 50
-const MAX_ROTATE_TRIES: int = 0
+const MAX_ROTATE_TRIES: int = 10
 
 enum BLOCK_IDS
 {
@@ -51,8 +51,6 @@ var active_rotation_id: int = 0
 var rotation_tries: int = 0
 var next_block_id: int = -1
 
-var hard_dropped: bool = false
-
 var line_multiplier: float = 1.0
 var line_clear_difficulty: int = 0
 var difficulty_update: int = 2
@@ -78,7 +76,7 @@ func unpause_game() -> void:
 
 func check_for_game_over() -> bool:
 	for x in range(0,MAX_X):
-		for y in range(0,6):
+		for y in range(0,5):
 			var vector: Vector2i = Vector2i(x,y)
 			if get_cell_source_id(0,vector) != BLOCK_IDS.GREY and not active_block_coords.has(vector):
 				return true
@@ -88,6 +86,8 @@ func check_for_game_over() -> bool:
 func game_over() -> void:
 	game_over_music.emit()
 	move_timer.paused = true
+
+	$GameOver.play()
 
 	for y in range(23,-1,-1):
 		clear_line_game_over(y)
@@ -108,14 +108,21 @@ func clear_board(fast: bool = true) -> void:
 			for y in range(0,MAX_Y):
 				set_cell(0,Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
-func check_line_clear() -> void:
+func check_lines_clear() -> void:
+	var lines: Array = []
+
 	for y in range(MAX_Y-1, -1, -1):
 		for x in range(0, MAX_X):
 			if get_cell_source_id(0,Vector2i(x,y)) == BLOCK_IDS.GREY:
 				break
 
 			if x == MAX_X-1:
-				clear_line(y)
+				lines.append(y)
+
+	if not lines.is_empty():
+		clear_lines(lines)
+	else:
+		generate_new_block()
 
 func is_line_empty(y: int) -> bool:
 	for x in range(0, MAX_X):
@@ -130,30 +137,32 @@ func update_difficulty() -> void:
 	move_timer.stop()
 	move_timer.wait_time = wrapf(move_timer.wait_time * 0.985,0.25,1.0)
 
-func clear_line(line_y: int) -> void:
+func clear_lines(lines: Array) -> void:
 	line_cleared.emit()
 	line_multiplier += 0.05
 
-	update_score.emit(int(LINE_SCORE * line_multiplier))
+	if not $LineClear.playing:
+		$LineClear.play()
+
+	update_score.emit(int(LINE_SCORE * line_multiplier * lines.size()))
 
 	line_clear_difficulty += 1
 	if line_clear_difficulty == difficulty_update:
 		update_difficulty()
 
-	for x in range(0,int(MAX_X/2)+1):
-		set_cell(0,Vector2i(x,line_y),BLOCK_IDS.GREY,ATLAS_COORDS)
-		set_cell(0,Vector2i(wrap(MAX_X-x,0,10),line_y),BLOCK_IDS.GREY,ATLAS_COORDS)
-		await get_tree().create_timer(0.05).timeout
+	for line: int in lines:
+		for x in range(0,int(MAX_X/2)+1):
+			set_cell(0,Vector2i(x,line),BLOCK_IDS.GREY,ATLAS_COORDS)
+			set_cell(0,Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
+			await get_tree().create_timer(0.025).timeout
 
-	for y in range(line_y,0,-1):
-		if is_line_empty(y+1):
-			break
-
+	for y in range(wrapi(lines[0]-1,0,MAX_Y-1),0,-1):
 		for x in range(0, MAX_X):
 			var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
+
 			set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
 
-	check_line_clear()
+	generate_new_block()
 
 func generate_bag() -> void:
 	randomize()
@@ -170,8 +179,8 @@ func generate_new_block() -> void:
 		move_timer.paused = true
 		return
 
+	clear_previous_ghost()
 	ghost_block_coords.clear()
-	check_line_clear()
 
 	var block_id: int
 
@@ -198,7 +207,6 @@ func generate_new_block() -> void:
 		set_cell(0,new_coord,block_color,ATLAS_COORDS)
 		active_block_coords.append(new_coord)
 
-	hard_dropped = false
 	active_block_id = block_id
 	active_rotation_id = 0
 	rotation_tries = 0
@@ -216,9 +224,11 @@ func move_down() -> void:
 	var updated_coords: Array = get_new_coords(Vector2i.DOWN, active_block_coords)
 
 	if can_move_down(updated_coords):
+		$PieceMove.play()
 		update_coords(active_block_coords, updated_coords)
 	else:
-		generate_new_block()
+		$PieceFail.play()
+		check_lines_clear()
 		update_score.emit(active_block_id+randi_range(1,6))
 
 	move_timer.start()
@@ -231,6 +241,7 @@ func move_left() -> void:
 		draw_ghost_block()
 
 func move_right() -> void:
+
 	var updated_coords: Array = get_new_coords(Vector2i.RIGHT, active_block_coords)
 
 	if can_move_right(updated_coords):
@@ -259,7 +270,7 @@ func update_coords(old_coords: Array, new_coords: Array) -> void:
 func rotate_block(direction: int, coords: Array) -> void:
 	rotation_tries += 1
 
-	if rotation_tries == MAX_ROTATE_TRIES:
+	if rotation_tries >= MAX_ROTATE_TRIES:
 		return
 
 	var new_rotation_id: int = active_rotation_id
@@ -301,6 +312,7 @@ func rotate_block(direction: int, coords: Array) -> void:
 
 	active_rotation_id = new_rotation_id
 	rotation_tries = 0
+	$PieceRotate.play()
 	update_coords(active_block_coords, new_coords)
 	draw_ghost_block()
 
@@ -394,8 +406,7 @@ func _process(_delta: float) -> void:
 		move_down()
 
 	if Input.is_action_just_pressed("drop"):
-		hard_dropped = true
-
+		$PieceDrop.play()
 		move_timer.stop()
 
 		while true:
@@ -406,7 +417,7 @@ func _process(_delta: float) -> void:
 				break
 
 		update_score.emit(int((active_block_id+randi_range(1,6)/2)))
-		generate_new_block()
+		check_lines_clear()
 
 	if Input.is_action_just_pressed("left"):
 		move_left()

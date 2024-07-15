@@ -65,11 +65,12 @@ func unpause() -> void:
 
 func reset() -> void:
 	$GameTheme.stop()
-	ComposerGD.ReloadScene("Game")
+	pause_game.emit()
+	Global.main.cross_fade("Game","Game")
 
 func exit() -> void:
 	$GameTheme.stop()
-	ComposerGD.ReplaceScene("Game","MainMenu",Global.main)
+	Global.main.cross_fade("Game","MainMenu")
 
 func _process(_delta: float) -> void:
 	if is_disabled_input:
@@ -111,7 +112,7 @@ func _on_grid_game_over_music() -> void:
 	game_over_panel.show()
 
 	var music_tween: Tween = get_tree().create_tween()
-	music_tween.tween_property($GameTheme,"volume_db",0.0,2.0)
+	music_tween.tween_property($GameTheme,"volume_db",linear_to_db(0.0),2.0)
 	music_tween.tween_callback($GameTheme.stop)
 
 func _on_grid_game_over_signal() -> void:
@@ -122,6 +123,10 @@ func _on_grid_game_over_signal() -> void:
 	var panel_tween: Tween = get_tree().create_tween()
 	panel_tween.tween_property(ui,"modulate:a",0.0,2.0)
 	panel_tween.tween_property(game_over_panel,"modulate:a",1.0,2.0)
+	panel_tween.tween_callback(
+		func() -> void:
+			$GameOverTheme.play()
+	)
 
 func _on_reset_pressed() -> void:
 	reset()

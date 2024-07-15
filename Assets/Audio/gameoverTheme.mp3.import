@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/gameoverTheme.mp3-5644bcec66936f879e08f5e0fd5
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

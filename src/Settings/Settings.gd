@@ -13,7 +13,7 @@ func _ready() -> void:
 	sfx_slider.value = Global.sfx_volume
 
 func _on_back_pressed() -> void:
-	ComposerGD.ReplaceScene("Settings","MainMenu",Global.main)
+	Global.main.cross_fade("Settings","MainMenu")
 
 func _on_music_slider_drag_ended(value_changed: bool) -> void:
 	music_slider.release_focus()
