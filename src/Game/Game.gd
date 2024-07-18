@@ -96,8 +96,8 @@ func _on_grid_update_score(s: int) -> void:
 	score += s
 	score_label.text = "Score: " + str(score)
 
-func _on_grid_line_cleared() -> void:
-	lines += 1
+func _on_grid_line_cleared(amount: int) -> void:
+	lines += amount
 	lines_label.text = "Lines: " + str(lines)
 
 func _on_grid_next_block_update(block: int) -> void:

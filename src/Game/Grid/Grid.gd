@@ -1,6 +1,6 @@
 class_name Grid extends TileMap
 
-signal line_cleared()
+signal line_cleared(amount: int)
 signal update_score(score: int)
 signal next_block_update(block: int)
 
@@ -138,7 +138,7 @@ func update_difficulty() -> void:
 	move_timer.wait_time = wrapf(move_timer.wait_time * 0.985,0.25,1.0)
 
 func clear_lines(lines: Array) -> void:
-	line_cleared.emit()
+	line_cleared.emit(lines.size())
 	line_multiplier += 0.05
 
 	if not $LineClear.playing:
@@ -150,17 +150,19 @@ func clear_lines(lines: Array) -> void:
 	if line_clear_difficulty == difficulty_update:
 		update_difficulty()
 
-	for line: int in lines:
+	for i in range(lines.size()-1,-1,-1):
+		var line: int = lines[i]
+
 		for x in range(0,int(MAX_X/2)+1):
 			set_cell(0,Vector2i(x,line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			set_cell(0,Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			await get_tree().create_timer(0.025).timeout
 
-	for y in range(wrapi(lines[0]-1,0,MAX_Y-1),0,-1):
-		for x in range(0, MAX_X):
-			var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
+		for y in range(line,0,-1):
+			for x in range(0, MAX_X):
+				var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
 
-			set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
+				set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
 
 	generate_new_block()
 
