@@ -3,6 +3,9 @@ extends Node2D
 func _ready() -> void:
 	Global.main.play_menu_theme()
 
+	if OS.has_feature("web"):
+		$CanvasLayer/Control/Buttons/Exit.hide()
+
 func _on_play_pressed() -> void:
 	Global.main.stop_menu_theme()
 	Global.main.cross_fade("MainMenu","Game")
