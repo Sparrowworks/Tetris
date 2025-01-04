@@ -8,19 +8,13 @@ func _ready() -> void:
 
 func _on_play_pressed() -> void:
 	Global.main.stop_menu_theme()
-	Global.main.cross_fade("MainMenu","Game")
+	Global.main.go_to("res://src/Game/Game.tscn")
 
 func _on_settings_pressed() -> void:
-	Global.main.cross_fade("MainMenu","Settings")
+	Global.main.go_to("res://src/Settings/Settings.tscn")
 
 func _on_credits_pressed() -> void:
-	Global.main.cross_fade("MainMenu","Credits")
+	Global.main.go_to("res://src/Credits/Credits.tscn")
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
-
-
-
-
-
-

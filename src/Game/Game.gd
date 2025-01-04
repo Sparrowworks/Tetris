@@ -66,11 +66,11 @@ func unpause() -> void:
 func reset() -> void:
 	$GameTheme.stop()
 	pause_game.emit()
-	Global.main.cross_fade("Game","Game")
+	Global.main.go_to("res://src/Game/Game.tscn")
 
 func exit() -> void:
 	$GameTheme.stop()
-	Global.main.cross_fade("Game","MainMenu")
+	Global.main.go_to("res://src/MainMenu/MainMenu.tscn")
 
 func _process(_delta: float) -> void:
 	if is_disabled_input:

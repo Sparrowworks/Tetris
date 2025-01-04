@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Kenney Space.ttf-8209646b7ea95ea221ec29f45258
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

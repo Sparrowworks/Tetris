@@ -3,3 +3,4 @@
 
 # VScode specific ignores because of you sparrow
 .vscode/
+*.tmp

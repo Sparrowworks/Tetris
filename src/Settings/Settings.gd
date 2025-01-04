@@ -13,7 +13,7 @@ func _ready() -> void:
 	sfx_slider.value = Global.sfx_volume
 
 func _on_back_pressed() -> void:
-	Global.main.cross_fade("Settings","MainMenu")
+	Global.main.go_to("res://src/MainMenu/MainMenu.tscn")
 
 func _on_music_slider_drag_ended(value_changed: bool) -> void:
 	music_slider.release_focus()
