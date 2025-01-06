@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Kenney Space.ttf-8209646b7ea95ea221ec29f45258
 [params]
 
 Rendering=null
-antialiasing=1
+antialiasing=0
 generate_mipmaps=false
 disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
@@ -25,10 +25,16 @@ hinting=1
 subpixel_positioning=1
 oversampling=0.0
 Fallbacks=null
-fallbacks=[]
+fallbacks=[Object(SystemFont,"resource_local_to_scene":false,"resource_name":"","fallbacks":Array[Font]([]),"font_names":PackedStringArray(),"font_italic":false,"font_weight":400,"font_stretch":100,"antialiasing":1,"generate_mipmaps":false,"disable_embedded_bitmaps":true,"allow_system_fallback":true,"force_autohinter":false,"hinting":1,"subpixel_positioning":1,"multichannel_signed_distance_field":false,"msdf_pixel_range":16,"msdf_size":48,"oversampling":0.0,"script":null)
+]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0)
+}]
 language_support={}
 script_support={}
 opentype_features={}

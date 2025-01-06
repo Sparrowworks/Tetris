@@ -1,4 +1,4 @@
-class_name Grid extends TileMap
+class_name Grid extends TileMapLayer
 
 signal line_cleared(amount: int)
 signal update_score(score: int)
@@ -78,7 +78,7 @@ func check_for_game_over() -> bool:
 	for x in range(0,MAX_X):
 		for y in range(0,5):
 			var vector: Vector2i = Vector2i(x,y)
-			if get_cell_source_id(0,vector) != BLOCK_IDS.GREY and not active_block_coords.has(vector):
+			if get_cell_source_id(vector) != BLOCK_IDS.GREY and not active_block_coords.has(vector):
 				return true
 
 	return false
@@ -97,8 +97,8 @@ func game_over() -> void:
 
 func clear_line_game_over(y: int) -> void:
 	for x in range(0,int(MAX_X/2)+1):
-		set_cell(0,Vector2i(x,y),-1)
-		set_cell(0,Vector2i(MAX_X-x,y),-1)
+		set_cell(Vector2i(x,y),-1)
+		set_cell(Vector2i(MAX_X-x,y),-1)
 		await get_tree().create_timer(0.05).timeout
 
 func clear_board(fast: bool = true) -> void:
@@ -106,14 +106,14 @@ func clear_board(fast: bool = true) -> void:
 		clear()
 		for x in range(0,MAX_X):
 			for y in range(0,MAX_Y):
-				set_cell(0,Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
+				set_cell(Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
 func check_lines_clear() -> void:
 	var lines: Array = []
 
 	for y in range(MAX_Y-1, -1, -1):
 		for x in range(0, MAX_X):
-			if get_cell_source_id(0,Vector2i(x,y)) == BLOCK_IDS.GREY:
+			if get_cell_source_id(Vector2i(x,y)) == BLOCK_IDS.GREY:
 				break
 
 			if x == MAX_X-1:
@@ -126,7 +126,7 @@ func check_lines_clear() -> void:
 
 func is_line_empty(y: int) -> bool:
 	for x in range(0, MAX_X):
-		if get_cell_source_id(0,Vector2i(x,y)) != BLOCK_IDS.GREY:
+		if get_cell_source_id(Vector2i(x,y)) != BLOCK_IDS.GREY:
 			return false
 
 	return true
@@ -154,15 +154,15 @@ func clear_lines(lines: Array) -> void:
 		var line: int = lines[i]
 
 		for x in range(0,int(MAX_X/2)+1):
-			set_cell(0,Vector2i(x,line),BLOCK_IDS.GREY,ATLAS_COORDS)
-			set_cell(0,Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
+			set_cell(Vector2i(x,line),BLOCK_IDS.GREY,ATLAS_COORDS)
+			set_cell(Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			await get_tree().create_timer(0.025).timeout
 
 		for y in range(line,0,-1):
 			for x in range(0, MAX_X):
-				var cell_upwards: int = get_cell_source_id(0,Vector2i(x,y-1))
+				var cell_upwards: int = get_cell_source_id(Vector2i(x,y-1))
 
-				set_cell(0,Vector2i(x,y),cell_upwards,ATLAS_COORDS)
+				set_cell(Vector2i(x,y),cell_upwards,ATLAS_COORDS)
 
 	generate_new_block()
 
@@ -206,7 +206,7 @@ func generate_new_block() -> void:
 	for i in range(0,4):
 		var coord: Vector2i = block_spawn_coords[i]
 		var new_coord: Vector2i = Vector2i(coord.x+int(MAX_X/2)-1,coord.y)
-		set_cell(0,new_coord,block_color,ATLAS_COORDS)
+		set_cell(new_coord,block_color,ATLAS_COORDS)
 		active_block_coords.append(new_coord)
 
 	active_block_id = block_id
@@ -264,10 +264,10 @@ func update_coords(old_coords: Array, new_coords: Array) -> void:
 		var old_coord: Vector2i = old_coords[i]
 		active_block_coords[i] = new_coords[i]
 
-		set_cell(0,old_coord,BLOCK_IDS.GREY,ATLAS_COORDS)
+		set_cell(old_coord,BLOCK_IDS.GREY,ATLAS_COORDS)
 
 	for coord: Vector2i in active_block_coords:
-		set_cell(0,coord,active_block_id,ATLAS_COORDS)
+		set_cell(coord,active_block_id,ATLAS_COORDS)
 
 func rotate_block(direction: int, coords: Array) -> void:
 	rotation_tries += 1
@@ -333,7 +333,7 @@ func can_rotate_down(coord: Vector2i) -> bool:
 func is_tile_taken(coord: Vector2i, coords_to_check: Array) -> bool:
 	if coord in coords_to_check: return false
 
-	var tile: int = get_cell_source_id(0,coord)
+	var tile: int = get_cell_source_id(coord)
 
 	if tile == BLOCK_IDS.GREY or tile == -1 or tile == BLOCK_IDS.BLACK:
 		return false
@@ -378,7 +378,7 @@ func clear_previous_ghost() -> void:
 		if coord in active_block_coords:
 			continue
 
-		set_cell(0,coord,BLOCK_IDS.GREY,ATLAS_COORDS)
+		set_cell(coord,BLOCK_IDS.GREY,ATLAS_COORDS)
 
 func update_ghost_coords() -> void:
 	ghost_block_coords = active_block_coords
@@ -399,7 +399,7 @@ func draw_ghost_block() -> void:
 		if coord in active_block_coords:
 			continue
 
-		set_cell(0, coord, BLOCK_IDS.BLACK, ATLAS_COORDS)
+		set_cell(coord, BLOCK_IDS.BLACK, ATLAS_COORDS)
 
 #endregion
 

@@ -38,7 +38,7 @@ func _ready() -> void:
 	$Time.start()
 
 	var theme: int = randi_range(1,2)
-	$GameTheme.stream = load("res://Assets/Audio/gameTheme" + str(theme) + ".mp3")
+	$GameTheme.stream = load("res://Assets/Audio/gameTheme" + str(theme) + ".ogg")
 	$GameTheme.play()
 
 	if not is_connected("pause_game", grid.pause_game):
@@ -107,6 +107,8 @@ func _on_grid_next_block_update(block: int) -> void:
 	next_block_img.texture = load(BLOCK_IMAGES[block]) as Texture2D
 
 func _on_grid_game_over_music() -> void:
+	grid.set_process(false)
+	set_process(false)
 	is_disabled_input = true
 	$Time.stop()
 	game_over_panel.show()
@@ -122,7 +124,7 @@ func _on_grid_game_over_signal() -> void:
 
 	var panel_tween: Tween = get_tree().create_tween()
 	panel_tween.tween_property(ui,"modulate:a",0.0,2.0)
-	panel_tween.tween_property(game_over_panel,"modulate:a",1.0,2.0)
+	panel_tween.tween_property(game_over_panel,"modulate:a",1.0,0.25)
 	panel_tween.tween_callback(
 		func() -> void:
 			$GameOverTheme.play()

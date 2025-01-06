@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b0kscguwuxer8" path="res://Assets/Images/button_rectangle_depth_gloss.png" id="3_2lxaw"]
 [ext_resource type="Texture2D" uid="uid://cqpd2serlmwu7" path="res://Assets/Images/button_rectangle_border.png" id="4_ieyuk"]
 [ext_resource type="Texture2D" uid="uid://boqrwy1aeyimk" path="res://Assets/Images/button_rectangle_depth_flat.png" id="5_2onu0"]
-[ext_resource type="AudioStream" uid="uid://drbea8cxd6f4" path="res://Assets/Audio/gameoverTheme.mp3" id="8_twthh"]
+[ext_resource type="AudioStream" uid="uid://dt37mtlpvfata" path="res://Assets/Audio/gameoverTheme.ogg" id="8_0e33b"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5odnr")
@@ -309,7 +309,7 @@ volume_db = -10.0
 bus = &"Music"
 
 [node name="GameOverTheme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_twthh")
+stream = ExtResource("8_0e33b")
 volume_db = -10.0
 bus = &"Music"
 
