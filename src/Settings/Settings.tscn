@@ -3,10 +3,9 @@
 [ext_resource type="Script" path="res://src/Settings/Settings.gd" id="1_36aqo"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="1_m2e63"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_dxhgy"]
-[ext_resource type="Texture2D" uid="uid://b0kscguwuxer8" path="res://Assets/Images/button_rectangle_depth_gloss.png" id="3_p31uq"]
-[ext_resource type="Texture2D" uid="uid://cqpd2serlmwu7" path="res://Assets/Images/button_rectangle_border.png" id="4_yhtvp"]
-[ext_resource type="Texture2D" uid="uid://ckdr2juh16k01" path="res://Assets/Images/grabber.png" id="5_51d4c"]
-[ext_resource type="Texture2D" uid="uid://boqrwy1aeyimk" path="res://Assets/Images/button_rectangle_depth_flat.png" id="5_c7sgs"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s4gqv"]
+load_path = "res://.godot/imported/grabber.png-9a4a982ee9f5f17e28a649d2f7fa4b53.s3tc.ctex"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxxmo"]
 bg_color = Color(0, 0.4, 0.85098, 1)
@@ -20,6 +19,15 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 shadow_size = 25
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ych1x"]
+load_path = "res://.godot/imported/button_rectangle_depth_gloss.png-e56682fe5d637cc0ac53e3c40090e515.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2o8ya"]
+load_path = "res://.godot/imported/button_rectangle_border.png-73a19164b41e27cb2f40c26bfa8cf0c9.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tq1yf"]
+load_path = "res://.godot/imported/button_rectangle_depth_flat.png-9aa3ed7b906c9a2b70e04cfcfb845c66.s3tc.ctex"
 
 [node name="Settings" type="Node2D"]
 script = ExtResource("1_36aqo")
@@ -85,9 +93,9 @@ vertical_alignment = 1
 [node name="MusicSlider" type="HSlider" parent="CanvasLayer/Control/HBoxContainer/MusicBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_icons/grabber = ExtResource("5_51d4c")
-theme_override_icons/grabber_highlight = ExtResource("5_51d4c")
-theme_override_icons/grabber_disabled = ExtResource("5_51d4c")
+theme_override_icons/grabber = SubResource("CompressedTexture2D_s4gqv")
+theme_override_icons/grabber_highlight = SubResource("CompressedTexture2D_s4gqv")
+theme_override_icons/grabber_disabled = SubResource("CompressedTexture2D_s4gqv")
 theme_override_styles/slider = SubResource("StyleBoxFlat_gxxmo")
 value = 50.0
 rounded = true
@@ -110,9 +118,9 @@ vertical_alignment = 1
 [node name="SfxSlider" type="HSlider" parent="CanvasLayer/Control/HBoxContainer/SfxBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_icons/grabber = ExtResource("5_51d4c")
-theme_override_icons/grabber_highlight = ExtResource("5_51d4c")
-theme_override_icons/grabber_disabled = ExtResource("5_51d4c")
+theme_override_icons/grabber = SubResource("CompressedTexture2D_s4gqv")
+theme_override_icons/grabber_highlight = SubResource("CompressedTexture2D_s4gqv")
+theme_override_icons/grabber_disabled = SubResource("CompressedTexture2D_s4gqv")
 theme_override_styles/slider = SubResource("StyleBoxFlat_gxxmo")
 value = 50.0
 rounded = true
@@ -125,9 +133,9 @@ offset_left = 1670.0
 offset_top = 1500.0
 offset_right = 2170.0
 offset_bottom = 1667.0
-texture_normal = ExtResource("3_p31uq")
-texture_pressed = ExtResource("4_yhtvp")
-texture_hover = ExtResource("5_c7sgs")
+texture_normal = SubResource("CompressedTexture2D_ych1x")
+texture_pressed = SubResource("CompressedTexture2D_2o8ya")
+texture_hover = SubResource("CompressedTexture2D_tq1yf")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Back"]
 layout_mode = 1

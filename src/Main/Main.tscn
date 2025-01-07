@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://dgfbeyjxpheet"]
 
 [ext_resource type="Script" path="res://src/Main/Main.gd" id="1_dn8st"]
-[ext_resource type="AudioStream" uid="uid://dt2em174w842t" path="res://Assets/Audio/menuTheme.ogg" id="2_3of1a"]
-[ext_resource type="AudioStream" uid="uid://s5tgfr81nhoj" path="res://Assets/Audio/SFX_ButtonUp.ogg" id="3_l74cd"]
+[ext_resource type="AudioStream" uid="uid://c4qo4rmo0xe3t" path="res://Assets/Audio/menuTheme.mp3" id="2_m40lm"]
+[ext_resource type="AudioStream" uid="uid://dbwpoxvyfwdoq" path="res://Assets/Audio/SFX_ButtonUp.mp3" id="3_vd501"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_dn8st")
 
 [node name="MenuTheme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_3of1a")
+stream = ExtResource("2_m40lm")
 volume_db = -10.0
 bus = &"Music"
 
 [node name="ButtonClick" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_l74cd")
+stream = ExtResource("3_vd501")
 volume_db = 10.0
 bus = &"SFX"

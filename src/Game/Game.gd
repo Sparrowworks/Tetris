@@ -38,7 +38,7 @@ func _ready() -> void:
 	$Time.start()
 
 	var theme: int = randi_range(1,2)
-	$GameTheme.stream = load("res://Assets/Audio/gameTheme" + str(theme) + ".ogg")
+	$GameTheme.stream = load("res://Assets/Audio/gameTheme" + str(theme) + ".mp3")
 	$GameTheme.play()
 
 	if not is_connected("pause_game", grid.pause_game):
@@ -131,9 +131,11 @@ func _on_grid_game_over_signal() -> void:
 	)
 
 func _on_reset_pressed() -> void:
+	grid.set_process(false)
 	reset()
 
 func _on_exit_pressed() -> void:
+	grid.set_process(false)
 	exit()
 
 func _on_pause_pressed() -> void:

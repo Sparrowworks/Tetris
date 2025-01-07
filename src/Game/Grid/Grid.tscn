@@ -1,21 +1,21 @@
 [gd_scene load_steps=27 format=3 uid="uid://nc4bb6j7bfmr"]
 
-[ext_resource type="Texture2D" uid="uid://wgmd2ma7wl3w" path="res://Assets/Images/blue.png" id="1_5p1qk"]
-[ext_resource type="Texture2D" uid="uid://cegjprs2tb2l6" path="res://Assets/Images/green.png" id="2_b4k2o"]
-[ext_resource type="Texture2D" uid="uid://btqk7yfncm67c" path="res://Assets/Images/grey.png" id="3_3nnk3"]
-[ext_resource type="Texture2D" uid="uid://dhd8advyw0gtb" path="res://Assets/Images/orange.png" id="4_nkb00"]
-[ext_resource type="Texture2D" uid="uid://ydyjtg7fwfhb" path="res://Assets/Images/pink.png" id="5_l3ddc"]
-[ext_resource type="Texture2D" uid="uid://dxumshpdfy5l2" path="res://Assets/Images/purple.png" id="6_k15t0"]
-[ext_resource type="Texture2D" uid="uid://hkdn4v1857pv" path="res://Assets/Images/red.png" id="7_mc56m"]
-[ext_resource type="Texture2D" uid="uid://bid8g13t4a2lh" path="res://Assets/Images/yellow.png" id="8_kcxgx"]
-[ext_resource type="Texture2D" uid="uid://cjbfp5kih65j1" path="res://Assets/Images/black.png" id="9_o3i82"]
+[ext_resource type="Texture2D" uid="uid://cn3bcmbtfaslw" path="res://Assets/Images/blue.png" id="1_5p1qk"]
+[ext_resource type="Texture2D" uid="uid://bkuwyrp2h32nf" path="res://Assets/Images/green.png" id="2_b4k2o"]
+[ext_resource type="Texture2D" uid="uid://jytdujwfdw3g" path="res://Assets/Images/grey.png" id="3_3nnk3"]
+[ext_resource type="Texture2D" uid="uid://ca5a0axv58b2g" path="res://Assets/Images/orange.png" id="4_nkb00"]
+[ext_resource type="Texture2D" uid="uid://gki33dcx445h" path="res://Assets/Images/pink.png" id="5_l3ddc"]
+[ext_resource type="Texture2D" uid="uid://dvp7esarak60u" path="res://Assets/Images/purple.png" id="6_k15t0"]
+[ext_resource type="Texture2D" uid="uid://b84dwttr3t2ji" path="res://Assets/Images/red.png" id="7_mc56m"]
+[ext_resource type="Texture2D" uid="uid://brqb3bmxsx0f2" path="res://Assets/Images/yellow.png" id="8_kcxgx"]
+[ext_resource type="Texture2D" uid="uid://mk2ehkhwtvf3" path="res://Assets/Images/black.png" id="9_o3i82"]
 [ext_resource type="Script" path="res://src/Game/Grid/Grid.gd" id="9_seumx"]
-[ext_resource type="AudioStream" uid="uid://dxoeeaj5onvo8" path="res://Assets/Audio/SFX_PieceHardDrop.ogg" id="11_1agqf"]
-[ext_resource type="AudioStream" uid="uid://cfocgutwwqa4f" path="res://Assets/Audio/SFX_GameOver.ogg" id="11_b5qof"]
-[ext_resource type="AudioStream" uid="uid://dthw42rwb10so" path="res://Assets/Audio/SFX_PieceFall.ogg" id="11_tbc5h"]
-[ext_resource type="AudioStream" uid="uid://28wwjc4pe3mq" path="res://Assets/Audio/SFX_PieceRotateLR.ogg" id="12_jc4hh"]
-[ext_resource type="AudioStream" uid="uid://db11v5rm5dj5e" path="res://Assets/Audio/SFX_PieceRotateFail.ogg" id="13_lfgmx"]
-[ext_resource type="AudioStream" uid="uid://cybyhw75xpihy" path="res://Assets/Audio/SFX_SpecialTSpin.ogg" id="15_njfj8"]
+[ext_resource type="AudioStream" uid="uid://cigb1kv0kqthe" path="res://Assets/Audio/SFX_PieceHardDrop.mp3" id="11_hj3iq"]
+[ext_resource type="AudioStream" uid="uid://c0yu07er68qul" path="res://Assets/Audio/SFX_GameOver.mp3" id="11_j82em"]
+[ext_resource type="AudioStream" uid="uid://dvh4y6vmxj7up" path="res://Assets/Audio/SFX_SpecialTSpin.mp3" id="11_jg17o"]
+[ext_resource type="AudioStream" uid="uid://co0a714gitx3t" path="res://Assets/Audio/SFX_PieceRotateLR.mp3" id="11_skbss"]
+[ext_resource type="AudioStream" uid="uid://c18t3o8hhsruv" path="res://Assets/Audio/SFX_PieceFall.mp3" id="11_x8hxf"]
+[ext_resource type="AudioStream" uid="uid://bcwr6n05jitco" path="res://Assets/Audio/SFX_PieceRotateFail.mp3" id="13_ick42"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_op7du"]
 texture = ExtResource("1_5p1qk")
@@ -81,32 +81,32 @@ script = ExtResource("9_seumx")
 [node name="MoveTimer" type="Timer" parent="."]
 
 [node name="PieceMove" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_tbc5h")
+stream = ExtResource("11_x8hxf")
 volume_db = 5.0
 bus = &"SFX"
 
 [node name="PieceRotate" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_jc4hh")
+stream = ExtResource("11_skbss")
 volume_db = 5.0
 bus = &"SFX"
 
 [node name="PieceFail" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_lfgmx")
+stream = ExtResource("13_ick42")
 volume_db = 10.0
 bus = &"SFX"
 
 [node name="PieceDrop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_1agqf")
+stream = ExtResource("11_hj3iq")
 volume_db = -10.0
 bus = &"SFX"
 
 [node name="LineClear" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("15_njfj8")
+stream = ExtResource("11_jg17o")
 volume_db = 10.0
 bus = &"SFX"
 
 [node name="GameOver" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_b5qof")
+stream = ExtResource("11_j82em")
 bus = &"Music"
 
 [connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
