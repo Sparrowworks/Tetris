@@ -116,6 +116,7 @@ theme_override_constants/separation = 50
 [node name="Pause" type="TextureButton" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
@@ -138,6 +139,7 @@ vertical_alignment = 1
 [node name="Reset" type="TextureButton" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
@@ -159,6 +161,7 @@ vertical_alignment = 1
 [node name="Exit" type="TextureButton" parent="CanvasLayer/Control/UI/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_ych1x")
@@ -267,6 +270,7 @@ alignment = 1
 [node name="Reset" type="TextureButton" parent="CanvasLayer/GameOverPanel/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
@@ -287,6 +291,7 @@ vertical_alignment = 1
 [node name="Exit" type="TextureButton" parent="CanvasLayer/GameOverPanel/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")

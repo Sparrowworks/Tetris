@@ -94,6 +94,7 @@ offset_left = 1670.0
 offset_top = 1500.0
 offset_right = 2170.0
 offset_bottom = 1667.0
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")

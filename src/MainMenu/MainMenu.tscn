@@ -63,6 +63,7 @@ theme_override_constants/separation = 75
 [node name="Play" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
@@ -83,6 +84,7 @@ vertical_alignment = 1
 [node name="Settings" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
@@ -103,6 +105,7 @@ vertical_alignment = 1
 [node name="Credits" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
@@ -123,6 +126,7 @@ vertical_alignment = 1
 [node name="Exit" type="TextureButton" parent="CanvasLayer/Control/Buttons"]
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
+focus_mode = 0
 texture_normal = SubResource("CompressedTexture2D_ych1x")
 texture_pressed = SubResource("CompressedTexture2D_2o8ya")
 texture_hover = SubResource("CompressedTexture2D_tq1yf")
