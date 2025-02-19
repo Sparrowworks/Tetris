@@ -1,12 +1,11 @@
-# Snake
-A clone of the classic Tetris game made in Godot
+# [Tetris](https://sp4r0w.itch.io/tetris)
+##A clone of the classic Tetris game made in Godot
 
-Play the game here: https://sp4r0w.itch.io/tetris
-
-### About
+### Description
 -------------
-This is a project of mine I made in Godot 4 a few months ago. It's a remake of a Tetris clone I've made a few years ago in Solar2D.<br>
-My aims were to make it look more appealing visually and make is less buggy, which I think I succeeded in. <br>
+This is a remake of a Tetris clone made a few years ago in Solar2D.<br>
+Our aims were to make it look more appealing visually and make it less buggy. <br>
+Various issues of the Lua's version were fixed and some new visual features were added (i.e ghost block)<br>
 
 ### Getting Started
 -------------
@@ -14,13 +13,11 @@ To compile this project, you will need at least Godot v4.3. Do not forget you wi
 More in-depth guide is avaiable here: https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html <br>
 You're free to modify the project as you wish.
 
-### Credits
--------------
-Credits are listed in the Help menu. <br>
-Thanks to Varga for testing. <br>
+### Installation
+- This game is playable on the [Itch](https://sp4r0w.itch.io/tetris) page.
+- Download the project from [Itch](https://sp4r0w.itch.io/tetris) and follow the instructions on how to play the game.
+- You can also [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) or download the repository and play it through Godot Editor.
 
-### Preview
+### Screenshots
 -------------
 ![Screenshot 2](screen1.png)
-
-Play the game here: https://sp4r0w.itch.io/tetris
