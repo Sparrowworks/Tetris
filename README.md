@@ -1,5 +1,5 @@
 # [Tetris](https://sp4r0w.itch.io/tetris)
-##A clone of the classic Tetris game made in Godot
+## A clone of the classic Tetris game made in Godot
 
 ### Description
 -------------
