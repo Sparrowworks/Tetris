@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://5v0eh4l1n16k"]
 
-[ext_resource type="Script" path="res://src/Settings/Settings.gd" id="1_36aqo"]
+[ext_resource type="Script" uid="uid://da2gl7tjhr2gr" path="res://src/Settings/Settings.gd" id="1_36aqo"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="1_m2e63"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_dxhgy"]
 

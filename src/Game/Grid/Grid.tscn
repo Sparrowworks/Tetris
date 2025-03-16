@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b84dwttr3t2ji" path="res://Assets/Images/red.png" id="7_mc56m"]
 [ext_resource type="Texture2D" uid="uid://brqb3bmxsx0f2" path="res://Assets/Images/yellow.png" id="8_kcxgx"]
 [ext_resource type="Texture2D" uid="uid://mk2ehkhwtvf3" path="res://Assets/Images/black.png" id="9_o3i82"]
-[ext_resource type="Script" path="res://src/Game/Grid/Grid.gd" id="9_seumx"]
+[ext_resource type="Script" uid="uid://d33cyo52ufd1a" path="res://src/Game/Grid/Grid.gd" id="9_seumx"]
 [ext_resource type="AudioStream" uid="uid://cigb1kv0kqthe" path="res://Assets/Audio/SFX_PieceHardDrop.mp3" id="11_hj3iq"]
 [ext_resource type="AudioStream" uid="uid://c0yu07er68qul" path="res://Assets/Audio/SFX_GameOver.mp3" id="11_j82em"]
 [ext_resource type="AudioStream" uid="uid://dvh4y6vmxj7up" path="res://Assets/Audio/SFX_SpecialTSpin.mp3" id="11_jg17o"]

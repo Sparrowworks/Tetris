@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://bp7lfeit42p40"]
 
 [ext_resource type="Texture2D" uid="uid://dvp7esarak60u" path="res://Assets/Images/purple.png" id="1_o2arb"]
-[ext_resource type="Script" path="res://src/Game/Blocks/Block.gd" id="1_ppkaa"]
+[ext_resource type="Script" uid="uid://xxm3783hqydd" path="res://src/Game/Blocks/Block.gd" id="1_ppkaa"]
 
 [resource]
 script = ExtResource("1_ppkaa")

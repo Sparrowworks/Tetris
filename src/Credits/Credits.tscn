@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c3ha5ocm4icrv"]
 
-[ext_resource type="Script" path="res://src/Credits/Credits.gd" id="1_2v6mn"]
+[ext_resource type="Script" uid="uid://bnf717bq71fps" path="res://src/Credits/Credits.gd" id="1_2v6mn"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="1_r0iue"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_escr2"]
 

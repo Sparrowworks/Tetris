@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c4b282ks3fxoo"]
 
-[ext_resource type="Script" path="res://src/MainMenu/MainMenu.gd" id="1_26kxw"]
+[ext_resource type="Script" uid="uid://ctukfcds1il8c" path="res://src/MainMenu/MainMenu.gd" id="1_26kxw"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_pct73"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="2_pruii"]
 
@@ -44,6 +44,20 @@ theme_override_font_sizes/font_size = 144
 text = "TETRIS
 "
 horizontal_alignment = 1
+
+[node name="VersionText" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -336.0
+offset_bottom = 78.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 48
+text = "v.1.0.0.0"
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="Buttons" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 1

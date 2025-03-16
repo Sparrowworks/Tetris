@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://04o6dj0y088j"]
 
-[ext_resource type="Script" path="res://src/Game/Game.gd" id="1_5odnr"]
+[ext_resource type="Script" uid="uid://cf0gwqhgbwh8" path="res://src/Game/Game.gd" id="1_5odnr"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_ij6hr"]
 [ext_resource type="PackedScene" uid="uid://nc4bb6j7bfmr" path="res://src/Game/Grid/Grid.tscn" id="2_ts7bs"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="2_uxx05"]

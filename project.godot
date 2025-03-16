@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="Tetris"
+config/version="1.0.1.0"
 run/main_scene="res://src/Main/Main.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
-boot_splash/show_image=false
+config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://jkxycoyfewv2"
 config/icon="res://icon.svg"
 
 [autoload]
