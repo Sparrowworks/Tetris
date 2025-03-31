@@ -3,15 +3,9 @@
 [ext_resource type="Script" uid="uid://ctukfcds1il8c" path="res://src/MainMenu/MainMenu.gd" id="1_26kxw"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_pct73"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="2_pruii"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ych1x"]
-load_path = "res://.godot/imported/button_rectangle_depth_gloss.png-e56682fe5d637cc0ac53e3c40090e515.s3tc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2o8ya"]
-load_path = "res://.godot/imported/button_rectangle_border.png-73a19164b41e27cb2f40c26bfa8cf0c9.s3tc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tq1yf"]
-load_path = "res://.godot/imported/button_rectangle_depth_flat.png-9aa3ed7b906c9a2b70e04cfcfb845c66.s3tc.ctex"
+[ext_resource type="Texture2D" uid="uid://lv2880avl0yd" path="res://Assets/Images/buttonNormal.png" id="4_vuisw"]
+[ext_resource type="Texture2D" uid="uid://pkxulvvmp62q" path="res://Assets/Images/buttonPressed.png" id="5_tcb8k"]
+[ext_resource type="Texture2D" uid="uid://crog1hhsi3way" path="res://Assets/Images/buttonHover.png" id="6_22hij"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_26kxw")
@@ -32,19 +26,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_pruii")
 
-[node name="Title" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 50.0
-offset_bottom = 281.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_pct73")
-theme_override_font_sizes/font_size = 144
-text = "TETRIS
-"
-horizontal_alignment = 1
-
 [node name="VersionText" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 1
@@ -58,6 +39,29 @@ theme_override_font_sizes/font_size = 48
 text = "v.1.0.0.0"
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 50.0
+offset_bottom = 281.0
+grow_horizontal = 2
+theme_override_constants/separation = 25
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 144
+text = "TETRIS"
+horizontal_alignment = 1
+
+[node name="DevTitle" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_pct73")
+theme_override_font_sizes/font_size = 64
+text = "Developed by Sparrowworks"
+horizontal_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
@@ -78,9 +82,9 @@ theme_override_constants/separation = 75
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_vuisw")
+texture_pressed = ExtResource("5_tcb8k")
+texture_hover = ExtResource("6_22hij")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Play"]
 layout_mode = 1
@@ -99,9 +103,9 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_vuisw")
+texture_pressed = ExtResource("5_tcb8k")
+texture_hover = ExtResource("6_22hij")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Settings"]
 layout_mode = 1
@@ -120,9 +124,9 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_vuisw")
+texture_pressed = ExtResource("5_tcb8k")
+texture_hover = ExtResource("6_22hij")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Credits"]
 layout_mode = 1
@@ -141,9 +145,9 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(500, 150)
 layout_mode = 2
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_vuisw")
+texture_pressed = ExtResource("5_tcb8k")
+texture_hover = ExtResource("6_22hij")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Buttons/Exit"]
 layout_mode = 1

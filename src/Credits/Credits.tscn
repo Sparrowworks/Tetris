@@ -3,15 +3,9 @@
 [ext_resource type="Script" uid="uid://bnf717bq71fps" path="res://src/Credits/Credits.gd" id="1_2v6mn"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="1_r0iue"]
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_escr2"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ych1x"]
-load_path = "res://.godot/imported/button_rectangle_depth_gloss.png-e56682fe5d637cc0ac53e3c40090e515.s3tc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2o8ya"]
-load_path = "res://.godot/imported/button_rectangle_border.png-73a19164b41e27cb2f40c26bfa8cf0c9.s3tc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tq1yf"]
-load_path = "res://.godot/imported/button_rectangle_depth_flat.png-9aa3ed7b906c9a2b70e04cfcfb845c66.s3tc.ctex"
+[ext_resource type="Texture2D" uid="uid://lv2880avl0yd" path="res://Assets/Images/buttonNormal.png" id="4_4ims8"]
+[ext_resource type="Texture2D" uid="uid://pkxulvvmp62q" path="res://Assets/Images/buttonPressed.png" id="5_6itbo"]
+[ext_resource type="Texture2D" uid="uid://crog1hhsi3way" path="res://Assets/Images/buttonHover.png" id="6_feakm"]
 
 [node name="Credits" type="Node2D"]
 script = ExtResource("1_2v6mn")
@@ -81,7 +75,7 @@ CREDITS
 Developed by: Sparrowworks
 
 Lead Programmer: SP4R0W
-Help/Testing: Varga
+Help/Testing: VargaDot
 
 Assets by: Kenney
 "
@@ -95,9 +89,9 @@ offset_top = 1500.0
 offset_right = 2170.0
 offset_bottom = 1667.0
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_4ims8")
+texture_pressed = ExtResource("5_6itbo")
+texture_hover = ExtResource("6_feakm")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/Back"]
 layout_mode = 1

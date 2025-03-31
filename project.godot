@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Tetris"
-config/version="1.0.1.0"
+config/version="1.0.2.0"
 run/main_scene="res://src/Main/Main.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/image="uid://jkxycoyfewv2"
@@ -49,17 +49,17 @@ import/fbx/enabled=false
 [importer_defaults]
 
 texture={
-"compress/channel_pack": 1,
+"compress/channel_pack": 0,
 "compress/hdr_compression": 1,
 "compress/high_quality": false,
 "compress/lossy_quality": 0.7,
-"compress/mode": 2,
+"compress/mode": 1,
 "compress/normal_map": 0,
-"detect_3d/compress_to": 1,
+"detect_3d/compress_to": 0,
 "mipmaps/generate": false,
 "mipmaps/limit": -1,
 "process/fix_alpha_border": true,
-"process/hdr_as_srgb": true,
+"process/hdr_as_srgb": false,
 "process/hdr_clamp_exposure": false,
 "process/normal_map_invert_y": false,
 "process/premult_alpha": false,

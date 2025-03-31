@@ -17,7 +17,10 @@ func set_version_text() -> void:
 	if how_many_zeroes == 1:
 		version_text.text = "v" + version.trim_suffix(".0")
 	elif how_many_zeroes > 1:
-		version_text.text = "v" + version.trim_suffix(".0.0")
+		if version.ends_with(".0.0"):
+			version_text.text = "v" + version.trim_suffix(".0.0")
+		else:
+			version_text.text = "v" + version.trim_suffix(".0")
 	else:
 		version_text.text = "v" + version
 

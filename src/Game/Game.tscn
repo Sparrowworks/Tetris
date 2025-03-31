@@ -4,16 +4,10 @@
 [ext_resource type="FontFile" uid="uid://un6ffojejhge" path="res://Assets/Kenney Space.ttf" id="2_ij6hr"]
 [ext_resource type="PackedScene" uid="uid://nc4bb6j7bfmr" path="res://src/Game/Grid/Grid.tscn" id="2_ts7bs"]
 [ext_resource type="Texture2D" uid="uid://bwatf8mlon43b" path="res://Assets/Images/bg.jpg" id="2_uxx05"]
+[ext_resource type="Texture2D" uid="uid://lv2880avl0yd" path="res://Assets/Images/buttonNormal.png" id="4_yeien"]
 [ext_resource type="AudioStream" uid="uid://cwq5s21j88r1v" path="res://Assets/Audio/gameoverTheme.mp3" id="5_seqsk"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ych1x"]
-load_path = "res://.godot/imported/button_rectangle_depth_gloss.png-e56682fe5d637cc0ac53e3c40090e515.s3tc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2o8ya"]
-load_path = "res://.godot/imported/button_rectangle_border.png-73a19164b41e27cb2f40c26bfa8cf0c9.s3tc.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tq1yf"]
-load_path = "res://.godot/imported/button_rectangle_depth_flat.png-9aa3ed7b906c9a2b70e04cfcfb845c66.s3tc.ctex"
+[ext_resource type="Texture2D" uid="uid://pkxulvvmp62q" path="res://Assets/Images/buttonPressed.png" id="5_vvitb"]
+[ext_resource type="Texture2D" uid="uid://crog1hhsi3way" path="res://Assets/Images/buttonHover.png" id="6_5ikym"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5odnr")
@@ -117,9 +111,9 @@ theme_override_constants/separation = 50
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_yeien")
+texture_pressed = ExtResource("5_vvitb")
+texture_hover = ExtResource("6_5ikym")
 
 [node name="PauseText" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Pause"]
 unique_name_in_owner = true
@@ -140,9 +134,9 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_yeien")
+texture_pressed = ExtResource("5_vvitb")
+texture_hover = ExtResource("6_5ikym")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Reset"]
 layout_mode = 1
@@ -162,9 +156,9 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_ych1x")
+texture_normal = ExtResource("4_yeien")
+texture_pressed = ExtResource("5_vvitb")
+texture_hover = ExtResource("6_5ikym")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/UI/ButtonContainer/Exit"]
 layout_mode = 1
@@ -271,9 +265,9 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_yeien")
+texture_pressed = ExtResource("5_vvitb")
+texture_hover = ExtResource("6_5ikym")
 
 [node name="ResetText" type="Label" parent="CanvasLayer/GameOverPanel/Buttons/Reset"]
 layout_mode = 1
@@ -292,9 +286,9 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
-texture_normal = SubResource("CompressedTexture2D_ych1x")
-texture_pressed = SubResource("CompressedTexture2D_2o8ya")
-texture_hover = SubResource("CompressedTexture2D_tq1yf")
+texture_normal = ExtResource("4_yeien")
+texture_pressed = ExtResource("5_vvitb")
+texture_hover = ExtResource("6_5ikym")
 
 [node name="ExitText" type="Label" parent="CanvasLayer/GameOverPanel/Buttons/Exit"]
 layout_mode = 1
