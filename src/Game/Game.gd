@@ -72,28 +72,31 @@ func exit() -> void:
 	$GameTheme.stop()
 	Global.main.go_to("res://src/MainMenu/MainMenu.tscn")
 
-func _process(_delta: float) -> void:
+func _input(event: InputEvent) -> void:
 	if is_disabled_input:
 		return
 
 	if Input.is_action_just_pressed("exit"):
 		exit()
+		return
 
 	if Input.is_action_just_pressed("pause"):
 		if is_paused:
 			unpause()
 		else:
 			pause()
+		return
 
 	if Input.is_action_just_pressed("reset"):
 		reset()
+		return
 
 func _on_time_timeout() -> void:
 	time += 1
 	time_label.text = "Time: " + str(time)
 
-func _on_grid_update_score(s: int) -> void:
-	score += s
+func _on_grid_update_score(value: int) -> void:
+	score += value
 	score_label.text = "Score: " + str(score)
 
 func _on_grid_line_cleared(amount: int) -> void:
@@ -102,14 +105,15 @@ func _on_grid_line_cleared(amount: int) -> void:
 
 func _on_grid_next_block_update(block: int) -> void:
 	if next_block_img == null:
-		_ready()
+		await ready
 
 	next_block_img.texture = load(BLOCK_IMAGES[block]) as Texture2D
 
 func _on_grid_game_over_music() -> void:
 	grid.set_process(false)
-	set_process(false)
+	set_process_input(false)
 	is_disabled_input = true
+
 	$Time.stop()
 	game_over_panel.show()
 
