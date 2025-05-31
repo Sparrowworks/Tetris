@@ -159,7 +159,7 @@ func clear_lines(lines: Array) -> void:
 			set_cell(Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			await get_tree().create_timer(0.025).timeout
 
-		# Move down all the blocks that are now floating
+		# Drop all floating blocks.
 		for y in range(line,0,-1):
 			for x in range(0, MAX_X):
 				var cell_upwards: int = get_cell_source_id(Vector2i(x,y-1))
