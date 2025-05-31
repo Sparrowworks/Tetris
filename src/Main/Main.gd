@@ -8,7 +8,6 @@ var is_changing_scene: bool = false
 
 func _ready() -> void:
 	Composer.root = self
-	randomize()
 
 	Global.main = self
 

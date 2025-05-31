@@ -75,6 +75,7 @@ func unpause_game() -> void:
 #region BOARD_FUNCTIONS
 
 func check_for_game_over() -> bool:
+	# Checks if the placed blocks are blocking the spawn of a new block
 	for x in range(0,MAX_X):
 		for y in range(0,5):
 			var vector: Vector2i = Vector2i(x,y)
@@ -101,16 +102,15 @@ func clear_line_game_over(y: int) -> void:
 		set_cell(Vector2i(MAX_X-x,y),-1)
 		await get_tree().create_timer(0.05).timeout
 
-func clear_board(fast: bool = true) -> void:
-	if fast:
-		clear()
-		for x in range(0,MAX_X):
-			for y in range(0,MAX_Y):
-				set_cell(Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
+func clear_board() -> void:
+	for x in range(0,MAX_X):
+		for y in range(0,MAX_Y):
+			set_cell(Vector2i(x,y),BLOCK_IDS.GREY,ATLAS_COORDS)
 
-func check_lines_clear() -> void:
+func check_for_lines_to_clear() -> void:
 	var lines: Array = []
 
+	# A line to clear is a line which has all spaces taken in a row
 	for y in range(MAX_Y-1, -1, -1):
 		for x in range(0, MAX_X):
 			if get_cell_source_id(Vector2i(x,y)) == BLOCK_IDS.GREY:
@@ -153,11 +153,13 @@ func clear_lines(lines: Array) -> void:
 	for i in range(lines.size()-1,-1,-1):
 		var line: int = lines[i]
 
+		# Remove the line that needs to be cleared
 		for x in range(0,int(MAX_X/2)+1):
 			set_cell(Vector2i(x,line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			set_cell(Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			await get_tree().create_timer(0.025).timeout
 
+		# Move down all the blocks that are now floating
 		for y in range(line,0,-1):
 			for x in range(0, MAX_X):
 				var cell_upwards: int = get_cell_source_id(Vector2i(x,y-1))
@@ -167,18 +169,17 @@ func clear_lines(lines: Array) -> void:
 	generate_new_block()
 
 func generate_bag() -> void:
+	# Generates the order of the next spawning tetrominos
 	randomize()
 	tetromino_bag = range(0,6)
 	tetromino_bag.shuffle()
 
 func generate_new_block() -> void:
+	# Do not draw a next block if its time to game over
 	if check_for_game_over():
+		move_timer.paused = true
 		is_game_over = true
 		game_over()
-		return
-
-	if is_game_over:
-		move_timer.paused = true
 		return
 
 	clear_previous_ghost()
@@ -186,6 +187,7 @@ func generate_new_block() -> void:
 
 	var block_id: int
 
+	# Grab a tetromino to spawn
 	if next_block_id == -1:
 		block_id = tetromino_bag.pop_front()
 	else:
@@ -197,6 +199,7 @@ func generate_new_block() -> void:
 	next_block_id = tetromino_bag.pop_front()
 	next_block_update.emit(next_block_id)
 
+	# Draw a tetromino and a ghost block
 	var block_resource: Block = BLOCK_FILES[block_id]
 	var block_spawn_coords: Array = block_resource.SpawnCoords[0]
 	var block_color: int = block_resource.ID
@@ -215,6 +218,7 @@ func generate_new_block() -> void:
 
 	draw_ghost_block()
 
+	# Make the tetromino appear on screen (first coords of the grid are off-screen)
 	move_down()
 	move_down()
 
@@ -230,7 +234,7 @@ func move_down() -> void:
 		update_coords(active_block_coords, updated_coords)
 	else:
 		$PieceFail.play()
-		check_lines_clear()
+		check_for_lines_to_clear()
 		update_score.emit(active_block_id+randi_range(1,6))
 
 	move_timer.start()
@@ -243,7 +247,6 @@ func move_left() -> void:
 		draw_ghost_block()
 
 func move_right() -> void:
-
 	var updated_coords: Array = get_new_coords(Vector2i.RIGHT, active_block_coords)
 
 	if can_move_right(updated_coords):
@@ -259,6 +262,7 @@ func get_new_coords(vector: Vector2i, coords: Array) -> Array:
 
 	return new_coords
 
+# Replaces the old coordinates of the block with new ones
 func update_coords(old_coords: Array, new_coords: Array) -> void:
 	for i in range(0,old_coords.size()):
 		var old_coord: Vector2i = old_coords[i]
@@ -272,6 +276,7 @@ func update_coords(old_coords: Array, new_coords: Array) -> void:
 func rotate_block(direction: int, coords: Array) -> void:
 	rotation_tries += 1
 
+	# If the rotation keeps failing after certain number of tries, we deem its impossible to rotate
 	if rotation_tries >= MAX_ROTATE_TRIES:
 		return
 
@@ -290,15 +295,17 @@ func rotate_block(direction: int, coords: Array) -> void:
 
 	var pivot_coord: Vector2i = coords[rotation_array[4]]
 
+	# Calculate the new coordinates of a rotated block
 	for i in range(0,coords.size()):
 		var rot_coord: Vector2i = rotation_array[i]
 		var new_coord: Vector2i = Vector2i(pivot_coord.x+rot_coord.x,pivot_coord.y+rot_coord.y)
 
-		if is_tile_taken(new_coord, active_block_coords):
+		if is_cell_taken(new_coord, active_block_coords):
 			return
 
 		new_coords.append(new_coord)
 
+	# If the rotation fails, due to lack of space, we try again but rotating even more, until we find a possible rotation
 	for coord: Vector2i in new_coords:
 		if not can_rotate_left(coord):
 			rotate_block(direction, get_new_coords(Vector2i.RIGHT, coords))
@@ -330,7 +337,8 @@ func can_rotate_right(coord: Vector2i) -> bool:
 func can_rotate_down(coord: Vector2i) -> bool:
 	return coord.y < MAX_Y-1
 
-func is_tile_taken(coord: Vector2i, coords_to_check: Array) -> bool:
+func is_cell_taken(coord: Vector2i, coords_to_check: Array) -> bool:
+	# A cell is taken when its not colored and not a ghost block
 	if coord in coords_to_check: return false
 
 	var tile: int = get_cell_source_id(coord)
@@ -345,7 +353,7 @@ func can_move_down(coords: Array) -> bool:
 		if coord.y > MAX_Y-1:
 			return false
 
-		if is_tile_taken(coord, active_block_coords):
+		if is_cell_taken(coord, active_block_coords):
 			return false
 
 	return true
@@ -355,7 +363,7 @@ func can_move_left(coords: Array) -> bool:
 		if coord.x < 0:
 			return false
 
-		if is_tile_taken(coord, active_block_coords):
+		if is_cell_taken(coord, active_block_coords):
 			return false
 
 	return true
@@ -365,7 +373,7 @@ func can_move_right(coords: Array) -> bool:
 		if coord.x >= MAX_X:
 			return false
 
-		if is_tile_taken(coord, active_block_coords):
+		if is_cell_taken(coord, active_block_coords):
 			return false
 
 	return true
@@ -381,6 +389,7 @@ func clear_previous_ghost() -> void:
 		set_cell(coord,BLOCK_IDS.GREY,ATLAS_COORDS)
 
 func update_ghost_coords() -> void:
+	# Draws the ghost block based on the lowest possible position
 	ghost_block_coords = active_block_coords
 
 	while true:
@@ -391,6 +400,7 @@ func update_ghost_coords() -> void:
 			break
 
 func draw_ghost_block() -> void:
+	# A ghost block is a block indicating where the piece is going to land
 	clear_previous_ghost()
 
 	update_ghost_coords()
@@ -411,6 +421,7 @@ func _process(_delta: float) -> void:
 		$PieceDrop.play()
 		move_timer.stop()
 
+		# Keep moving the piece down until it reaches a blockade
 		while true:
 			var move_coords: Array = get_new_coords(Vector2i.DOWN, active_block_coords)
 			if can_move_down(move_coords):
@@ -419,7 +430,7 @@ func _process(_delta: float) -> void:
 				break
 
 		update_score.emit(int((active_block_id+randi_range(1,6)/2)))
-		check_lines_clear()
+		check_for_lines_to_clear()
 
 	if Input.is_action_just_pressed("left"):
 		move_left()
