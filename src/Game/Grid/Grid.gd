@@ -295,7 +295,7 @@ func rotate_block(direction: int, coords: Array) -> void:
 
 	var pivot_coord: Vector2i = coords[rotation_array[4]]
 
-	# Calculate the new coordinates of a rotated block
+	# Calculate the rotated block's new coordinates
 	for i in range(0,coords.size()):
 		var rot_coord: Vector2i = rotation_array[i]
 		var new_coord: Vector2i = Vector2i(pivot_coord.x+rot_coord.x,pivot_coord.y+rot_coord.y)
