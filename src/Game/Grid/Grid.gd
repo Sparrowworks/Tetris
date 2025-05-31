@@ -276,7 +276,7 @@ func update_coords(old_coords: Array, new_coords: Array) -> void:
 func rotate_block(direction: int, coords: Array) -> void:
 	rotation_tries += 1
 
-	# If the rotation keeps failing after certain number of tries, we deem its impossible to rotate
+	# If rotation fails after several attempts, it's considered impossible.
 	if rotation_tries >= MAX_ROTATE_TRIES:
 		return
 
