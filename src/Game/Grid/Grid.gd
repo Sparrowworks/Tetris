@@ -218,7 +218,7 @@ func generate_new_block() -> void:
 
 	draw_ghost_block()
 
-	# Make the tetromino appear on screen (first coords of the grid are off-screen)
+	# Place the tetromino on screen (initial grid coordinates are off-screen).
 	move_down()
 	move_down()
 
