@@ -110,7 +110,7 @@ func clear_board() -> void:
 func check_for_lines_to_clear() -> void:
 	var lines: Array = []
 
-	# A line to clear is a line which has all spaces taken in a row
+	# A line to clear is a row where all spaces are filled.
 	for y in range(MAX_Y-1, -1, -1):
 		for x in range(0, MAX_X):
 			if get_cell_source_id(Vector2i(x,y)) == BLOCK_IDS.GREY:
