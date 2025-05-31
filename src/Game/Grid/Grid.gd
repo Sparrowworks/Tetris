@@ -305,7 +305,7 @@ func rotate_block(direction: int, coords: Array) -> void:
 
 		new_coords.append(new_coord)
 
-	# If the rotation fails, due to lack of space, we try again but rotating even more, until we find a possible rotation
+	# If rotation fails due to limited space, keep increasing the rotation until it succeeds.
 	for coord: Vector2i in new_coords:
 		if not can_rotate_left(coord):
 			rotate_block(direction, get_new_coords(Vector2i.RIGHT, coords))
