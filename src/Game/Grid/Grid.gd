@@ -169,7 +169,7 @@ func clear_lines(lines: Array) -> void:
 	generate_new_block()
 
 func generate_bag() -> void:
-	# Generates the order of the next spawning tetrominos
+	# Determines the spawn order of upcoming tetrominos.
 	randomize()
 	tetromino_bag = range(0,6)
 	tetromino_bag.shuffle()
