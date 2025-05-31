@@ -153,7 +153,7 @@ func clear_lines(lines: Array) -> void:
 	for i in range(lines.size()-1,-1,-1):
 		var line: int = lines[i]
 
-		# Remove the line that needs to be cleared
+		# Remove the filled line.
 		for x in range(0,int(MAX_X/2)+1):
 			set_cell(Vector2i(x,line),BLOCK_IDS.GREY,ATLAS_COORDS)
 			set_cell(Vector2i(wrap(MAX_X-x,0,10),line),BLOCK_IDS.GREY,ATLAS_COORDS)
