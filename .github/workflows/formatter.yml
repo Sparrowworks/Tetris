@@ -2,7 +2,7 @@ name: Static checks
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   
   workflow_dispatch:
     inputs:
@@ -44,7 +44,7 @@ jobs:
           gh pr create \
             --title "chore: format GDScript files" \
             --body "Automatically formatted GDScript files using gdformat." \
-            --base master \
+            --base main \
             --head $BRANCH_NAME
         else
           echo "No formatting changes."
