@@ -6,12 +6,14 @@ extends Node2D
 
 var is_changing_scene: bool = false
 
+
 func _ready() -> void:
 	Composer.root = self
 
 	Global.main = self
 
 	Composer.load_scene("res://src/MainMenu/MainMenu.tscn")
+
 
 func go_to(scene: String) -> void:
 	var transition: Node = Composer.setup_load_screen(loading_transition)
@@ -20,9 +22,11 @@ func go_to(scene: String) -> void:
 		await transition.finished_fade_in
 		Composer.load_scene(scene)
 
+
 func play_menu_theme() -> void:
 	if not menu_theme.playing:
 		menu_theme.play()
+
 
 func stop_menu_theme() -> void:
 	menu_theme.stop()
